@@ -20,6 +20,5 @@ public class StadiumImpl implements StadiumService {
         stadium.setStadiumName(addStadiumDTO.getStadiumName());
         BeanUtils.copyProperties(addStadiumDTO,stadium);
         stadiumMapper.AddStadium(stadium);
-
     }
 }
