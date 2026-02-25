@@ -1,5 +1,6 @@
 package com.basketball.dto.match;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -18,8 +19,10 @@ public class MatchDTO {
     @Schema(description = "队伍B")
     private String teamB;
     @Schema(description = "比赛日期")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate matchDate;
     @Schema(description = "比赛时间")
+    @JsonFormat(pattern = "HH:mm:ss")
     private Time startTime;
     @Schema(description = "场馆id")
     private String stadiumId;
