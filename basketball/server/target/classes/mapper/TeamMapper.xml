@@ -18,4 +18,32 @@
             </if>
         </where>
     </select>
+
+    <select id="selectTeamById" resultType="com.basketball.vo.team.SelectTeamDetailVO">
+        SELECT
+        id,
+        name,
+        logo,
+        established_date AS establishedDate,
+        contact_phone AS contactPhone,
+        address
+        FROM team
+        WHERE id = #{teamId}
+    </select>
+    <select id="selectPlayersByTeamId" resultType="com.basketball.vo.player.PlayerVO">
+        SELECT
+        p.id,
+        p.photo,
+        CONCAT(p.last_name, p.first_name) AS name,
+        p.date_of_birth AS dateOfBirth,
+        pos.name AS position,
+        p.shirt_number AS shirtNumber
+        FROM player p
+        LEFT JOIN position pos ON p.position_id = pos.id
+        WHERE p.team_id = #{teamId}
+        <if test="playerName != null and playerName != ''">
+            AND CONCAT(p.last_name, p.first_name) LIKE CONCAT('%', #{playerName}, '%')
+        </if>
+        ORDER BY p.shirt_number ASC
+    </select>
 </mapper>

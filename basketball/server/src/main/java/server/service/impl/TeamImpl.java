@@ -1,7 +1,10 @@
 package server.service.impl;
 
+import com.basketball.dto.team.SelectTeamDetailDTO;
 import com.basketball.dto.team.SelectTeamsDTO;
 import com.basketball.result.PageResult;
+import com.basketball.vo.player.PlayerVO;
+import com.basketball.vo.team.SelectTeamDetailVO;
 import com.basketball.vo.team.SelectTeamsVO;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -26,4 +29,16 @@ public class TeamImpl implements TeamService {
         return new PageResult<>(total, teamList);
 
     }
+
+    @Override
+    public SelectTeamDetailVO selectteamDetail(SelectTeamDetailDTO selectTeamDetailDTO) throws Exception {
+        SelectTeamDetailVO teamDetail = teamMapper.selectTeamById(selectTeamDetailDTO.getTeamId());
+        if (teamDetail == null) {
+            throw new Exception("球队不存在");
+        }
+        List<PlayerVO> players = teamMapper.selectPlayersByTeamId(selectTeamDetailDTO.getTeamId(), selectTeamDetailDTO.getPlayerName());
+        teamDetail.setPlayers(players);
+        return teamDetail;
+    }
+
 }

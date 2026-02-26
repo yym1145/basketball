@@ -1,8 +1,10 @@
 package server.controller;
 
+import com.basketball.dto.team.SelectTeamDetailDTO;
 import com.basketball.dto.team.SelectTeamsDTO;
 import com.basketball.result.PageResult;
 import com.basketball.result.Result;
+import com.basketball.vo.team.SelectTeamDetailVO;
 import com.basketball.vo.team.SelectTeamsVO;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import io.swagger.v3.oas.annotations.Operation;
@@ -27,5 +29,11 @@ public class TeamController {
     @ApiOperationSupport(author = "高梦燚")
     public Result<PageResult<SelectTeamsVO>> selectteams(@RequestBody SelectTeamsDTO selectTeamsDTO){
         return Result.success("查询比赛成功",teamService.selectteams(selectTeamsDTO));
+    }
+    @PostMapping("/selectteamDetail")
+    @Operation(summary = "查询球队详情")
+    @ApiOperationSupport(author = "高梦燚")
+    public Result<SelectTeamDetailVO> selectteamDetail(@RequestBody SelectTeamDetailDTO selectTeamDetailDTO) throws Exception {
+        return Result.success("查询比赛成功",teamService.selectteamDetail(selectTeamDetailDTO));
     }
 }
