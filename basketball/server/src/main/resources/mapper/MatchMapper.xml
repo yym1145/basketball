@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace等于mapper接口类的全限定名,这样实现对应 -->
+<mapper namespace="server.mapper.MatchMapper">
+    <select id="selectMatch" resultType="com.basketball.vo.ballMatch.SelectMatchVO">
+         SELECT
+         b.match_number AS id,
+         b.match_number AS matchNumber,
+         b.name AS name,
+         b.status_id AS statusId,
+         b.teama AS teamAId,
+         b.teamb AS teamBId,
+         e.name AS eventName,
+         t1.name AS teamA,
+         t2.name AS teamB,
+         b.match_date AS matchDate,
+         b.start_time AS startTime,
+         b.stadium_id AS stadiumId
+         FROM basketball_match b
+         LEFT JOIN team t1 ON b.teama = t1.id
+         LEFT JOIN team t2 ON b.teamb = t2.id
+         LEFT JOIN event e ON b.event_id = e.id
+         <where>
+             <if test="name!=null">
+                b.name like concat('%',#{name},'%')
+             </if>
+             <if test="statusId!=null">
+                b.status_id = #{statusId}
+             </if>
+         </where>
+    </select>
+    <select id="selectDetailedMatch" resultType="com.basketball.vo.ballMatch.SelectDetailedMatchVO">
+        SELECT
+        b.match_number AS matchNumber,
+        b.name AS name,
+        b.status_id AS statusId,
+        e.name AS eventName,
+        t1.name AS teamA,
+        t2.name AS teamB,
+        b.match_date AS matchDate,
+        b.start_time AS startTime,
+        b.stadium_id AS stadiumId,
+        s.name AS stadiumName,
+        ms.name AS statusName
+        FROM basketball_match b
+        LEFT JOIN team t1 ON b.teama = t1.id
+        LEFT JOIN team t2 ON b.teamb = t2.id
+        LEFT JOIN event e ON b.event_id = e.id
+        LEFT JOIN stadium s ON b.stadium_id = s.id
+        LEFT JOIN matchstatus ms ON b.status_id = ms.id
+        WHERE b.id = #{matchId}
+    </select>
+    <update id="updateMatch" parameterType="com.basketball.dto.match.UpdateMatchDTO">
+        UPDATE basketball_match
+        <set>
+            <if test="name!=null">name=#{name},</if>
+            <if test="statusId!=null">status_id=#{statusId},</if>
+            <if test="teamA!=null">teama=#{teamA},</if>
+            <if test="teamB!=null">teamb=#{teamB},</if>
+            <if test="eventId!=null">event_id=#{eventId},</if>
+            <if test="stadiumId!=null">stadium_id=#{stadiumId},</if>
+            <if test="matchDate!=null">match_date=#{matchDate},</if>
+            <if test="startTime!=null">start_time=#{startTime},</if>
+        </set>
+        WHERE id=#{id}
+    </update>
+</mapper>
