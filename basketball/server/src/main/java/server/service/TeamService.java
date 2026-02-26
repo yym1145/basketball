@@ -11,4 +11,7 @@ public interface TeamService {
     PageResult<SelectTeamsVO> selectteams(SelectTeamsDTO selectTeamsDTO);
 
     SelectTeamDetailVO selectteamDetail(SelectTeamDetailDTO selectTeamDetailDTO) throws Exception;
+
+    Long addTeam(AddTeamDTO addTeamDTO) throws Exception;
+
 }

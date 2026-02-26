@@ -9,7 +9,7 @@
         name,
         contact_phone,
         address,
-        logo,
+
         established_date
         from team
         <where>
@@ -23,7 +23,7 @@
         SELECT
         id,
         name,
-        logo,
+
         established_date AS establishedDate,
         contact_phone AS contactPhone,
         address
