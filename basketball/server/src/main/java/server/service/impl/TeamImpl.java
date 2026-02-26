@@ -50,6 +50,7 @@ public class TeamImpl implements TeamService {
         return teamDetail;
     }
 
+    @Override
     public Long addTeam(AddTeamDTO addTeamDTO) throws Exception {
         if (teamMapper.selectByName(addTeamDTO.getName()) != null) {
             throw new Exception("球队名称已存在");
@@ -70,4 +71,22 @@ public class TeamImpl implements TeamService {
         teamMapper.addTeam(team);
         return team.getId();
     }
+    @Override
+    public void updateTeam(UpdateTeamDTO updateTeamDTO) throws Exception {
+        Team team = teamMapper.selectById(updateTeamDTO.getId());
+        if (team == null) {
+            throw new Exception("球队不存在");
+        }
+        if (StringUtils.hasText(updateTeamDTO.getName()) && !updateTeamDTO.getName().equals(team.getName())) {
+            Team existTeam = teamMapper.selectByName(updateTeamDTO.getName());
+            if (existTeam != null) {
+                throw new Exception("球队名称已存在");
+            }
+        }
+        if (updateTeamDTO.getLogo() != null && !updateTeamDTO.getLogo().isEmpty()) {
+            updateTeamDTO.setLogoBytes(updateTeamDTO.getLogo().getBytes());
+        }
+        teamMapper.updateTeam(updateTeamDTO);
+    }
+
 }

@@ -48,4 +48,12 @@ public class TeamController {
         return Result.success("新增成功",teamId);
     }
 
+    @PostMapping(value = "/updateTeam")
+    @Operation(summary = "修改球队")
+    @ApiOperationSupport(author = "高梦燚")
+    public Result<String> updateTeam(UpdateTeamDTO updateTeamDTO) throws Exception {
+        teamService.updateTeam(updateTeamDTO);
+        return Result.success("修改成功",null);
+    }
+
 }

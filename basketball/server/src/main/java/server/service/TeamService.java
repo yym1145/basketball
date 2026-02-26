@@ -14,4 +14,8 @@ public interface TeamService {
 
     Long addTeam(AddTeamDTO addTeamDTO) throws Exception;
 
+    void updateTeam(UpdateTeamDTO updateTeamDTO) throws Exception;
+
+
+    void deleteTeam(Long id) throws Exception;
 }

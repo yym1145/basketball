@@ -44,4 +44,9 @@ public interface TeamMapper {
     @Insert("INSERT INTO team (id,name, contact_phone, address, logo, established_date) VALUES (#{id},#{name},#{contactPhone},#{address},#{logo},#{establishedDate})")
     @Options(useGeneratedKeys = true, keyProperty = "id")
     int addTeam(Team team);
+
+    /**
+     *修改球队
+     */
+    int updateTeam(UpdateTeamDTO updateTeamDTO);
 }
