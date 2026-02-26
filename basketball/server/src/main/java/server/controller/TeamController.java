@@ -1,0 +1,31 @@
+package server.controller;
+
+import com.basketball.dto.team.SelectTeamsDTO;
+import com.basketball.result.PageResult;
+import com.basketball.result.Result;
+import com.basketball.vo.team.SelectTeamsVO;
+import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+import server.service.TeamService;
+
+@RestController
+@RequestMapping("/team")
+@CrossOrigin
+@Slf4j
+@RequiredArgsConstructor
+@Tag(name = "球队")
+@Validated
+public class TeamController {
+    private final TeamService teamService;
+    @PostMapping("/selectteams")
+    @Operation(summary = "查询所有球队")
+    @ApiOperationSupport(author = "高梦燚")
+    public Result<PageResult<SelectTeamsVO>> selectteams(@RequestBody SelectTeamsDTO selectTeamsDTO){
+        return Result.success("查询比赛成功",teamService.selectteams(selectTeamsDTO));
+    }
+}
