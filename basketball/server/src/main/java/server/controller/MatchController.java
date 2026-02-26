@@ -5,9 +5,11 @@ import com.basketball.dto.match.SelectMatchDTO;
 import com.basketball.entity.Match;
 import com.basketball.result.PageResult;
 import com.basketball.result.Result;
+import com.basketball.vo.ballMatch.SelectDetailedMatchVO;
 import com.basketball.vo.ballMatch.SelectMatchVO;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -42,6 +44,11 @@ public class MatchController {
         return Result.success("查询比赛成功",matchService.selectMatch(selectMatchDTO));
     }
 
-
+    @PostMapping("selectDetailedMatch")
+    @Operation(summary = "查询比赛详情")
+    @ApiOperationSupport(author = "卢锐")
+    public Result<SelectDetailedMatchVO> selectDetailedMatch(@Schema(description = "比赛id") @RequestParam Long matchId){
+        return Result.success("查询比赛详情成功",matchService.selectDetailedMatch(matchId));
+    }
 
 }

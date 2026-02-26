@@ -5,6 +5,7 @@ import com.basketball.dto.match.MatchDTO;
 import com.basketball.dto.match.SelectMatchDTO;
 import com.basketball.entity.Match;
 import com.basketball.result.PageResult;
+import com.basketball.vo.ballMatch.SelectDetailedMatchVO;
 import com.basketball.vo.ballMatch.SelectMatchVO;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -44,5 +45,10 @@ public class MatchImpl implements MatchService {
         long total = page.getTotal();
         List<SelectMatchVO> matchList = page.getResult();
         return new PageResult<>(total, matchList);
+    }
+
+    @Override
+    public SelectDetailedMatchVO selectDetailedMatch(Long matchId) {
+        return matchMapper.selectDetailedMatch(matchId);
     }
 }

@@ -2,6 +2,7 @@ package server.mapper;
 
 import com.basketball.dto.match.SelectMatchDTO;
 import com.basketball.entity.Match;
+import com.basketball.vo.ballMatch.SelectDetailedMatchVO;
 import com.basketball.vo.ballMatch.SelectMatchVO;
 import com.github.pagehelper.Page;
 import org.apache.ibatis.annotations.Insert;
@@ -16,4 +17,6 @@ public interface MatchMapper {
     void insert(Match match1);
 
     Page<SelectMatchVO> selectMatch(SelectMatchDTO selectMatchDTO);
+
+    SelectDetailedMatchVO selectDetailedMatch(Long matchId);
 }
