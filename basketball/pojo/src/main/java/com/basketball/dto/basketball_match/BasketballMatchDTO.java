@@ -1,30 +1,27 @@
-package com.basketball.entity;
+package com.basketball.dto.basketball_match;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.sql.Time;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 @Data
-public class Match {
-    @Schema(description = "id")
-    private Long id;
-    @Schema(description = "比赛id")
-    private String matchNumber;
-    @Schema(description = "比赛名称")
-    private String name;
+public class BasketballMatchDTO {
     @Schema(description = "赛事id")
     private String eventId;
+    @Schema(description = "比赛名称")
+    private String name;
     @Schema(description = "队伍A")
     private String teamA;
     @Schema(description = "队伍B")
     private String teamB;
-    @Schema(description = "比赛日期")
+    @Schema(description = "比赛日期,格式为yyyy-MM-dd", pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate matchDate;
-    @Schema(description = "比赛时间")
+    @Schema(description = "比赛时间,格式为HH:mm:ss", pattern = "HH:mm:ss")
+    @JsonFormat(pattern = "HH:mm:ss")
     private Time startTime;
     @Schema(description = "场馆id")
     private String stadiumId;

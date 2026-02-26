@@ -1,9 +1,9 @@
 package server.controller;
 
-import com.basketball.dto.match.MatchDTO;
-import com.basketball.dto.match.SelectMatchDTO;
-import com.basketball.dto.match.UpdateMatchDTO;
-import com.basketball.entity.Match;
+import com.basketball.dto.basketball_match.BasketballMatchDTO;
+
+import com.basketball.dto.basketball_match.SelectBasketballMatchDTO;
+import com.basketball.dto.basketball_match.UpdateBasketballMatchDTO;
 import com.basketball.result.PageResult;
 import com.basketball.result.Result;
 import com.basketball.vo.ballMatch.SelectDetailedMatchVO;
@@ -12,6 +12,7 @@ import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
@@ -20,43 +21,47 @@ import server.service.MatchService;
 
 
 @RestController
-@RequestMapping("/match")
+@RequestMapping("/basketballMatch")
 @CrossOrigin
 @Slf4j
 @RequiredArgsConstructor
-@Tag(name = "比赛")
+@Tag(name = "比赛管理")
 @Validated
-public class MatchController {
+public class BasketballMatchController {
 
     private final MatchService matchService;
 
-    @PostMapping("/addMatch")
+    @PostMapping("/addBasketballMatch")
     @Operation(summary = "新增比赛")
     @ApiOperationSupport(author = "卢锐")
-    public Result addMatch(@RequestBody MatchDTO matchDTO) {
+    public Result addMatch(@RequestBody BasketballMatchDTO matchDTO) {
         matchService.addMatch(matchDTO);
         return Result.success("新增比赛成功");
     }
 
-    @PostMapping("/selectMatch")
+    @PostMapping("/selectBasketballMatch")
     @Operation(summary = "查询比赛")
     @ApiOperationSupport(author = "卢锐")
-    public Result<PageResult<SelectMatchVO>> selectMatch(@RequestBody SelectMatchDTO selectMatchDTO) {
-        return Result.success("查询比赛成功", matchService.selectMatch(selectMatchDTO));
+    public Result<PageResult<SelectMatchVO>> selectMatch(@RequestBody SelectBasketballMatchDTO selectBasketballMatchDTO) {
+        return Result.success("查询比赛成功", matchService.selectMatch(selectBasketballMatchDTO));
     }
 
-    @PostMapping("selectDetailedMatch")
+
+    @PostMapping("selectDetailedBasketballMatch")
     @Operation(summary = "查询比赛详情")
     @ApiOperationSupport(author = "卢锐")
     public Result<SelectDetailedMatchVO> selectDetailedMatch(@Schema(description = "比赛id") @RequestParam Long matchId) {
         return Result.success("查询比赛详情成功", matchService.selectDetailedMatch(matchId));
     }
 
-    @PostMapping("/updateMatch")
+    @PostMapping("/updateBasketballMatch")
     @Operation(summary = "更新比赛")
     @ApiOperationSupport(author = "卢锐")
-    public Result updateMatch(@RequestBody UpdateMatchDTO updateMatchDTO) {
-        matchService.updateMatch(updateMatchDTO);
+    public Result updateMatch(@RequestBody UpdateBasketballMatchDTO updateBasketballMatchDTO) {
+        matchService.updateMatch(updateBasketballMatchDTO);
         return Result.success("更新比赛成功");
     }
+
+//    @PostMapping("/deleteBasketballMatch")
+
 }

@@ -1,10 +1,10 @@
 package server.service.impl;
 
 import com.baomidou.mybatisplus.core.toolkit.IdWorker;
-import com.basketball.dto.match.MatchDTO;
-import com.basketball.dto.match.SelectMatchDTO;
-import com.basketball.dto.match.UpdateMatchDTO;
-import com.basketball.entity.Match;
+import com.basketball.dto.basketball_match.BasketballMatchDTO;
+import com.basketball.dto.basketball_match.SelectBasketballMatchDTO;
+import com.basketball.dto.basketball_match.UpdateBasketballMatchDTO;
+import com.basketball.entity.BasketballMatch;
 import com.basketball.result.PageResult;
 import com.basketball.vo.ballMatch.SelectDetailedMatchVO;
 import com.basketball.vo.ballMatch.SelectMatchVO;
@@ -24,25 +24,25 @@ public class MatchImpl implements MatchService {
     private final MatchMapper matchMapper;
 
     @Override
-    public void addMatch(MatchDTO match) {
-        Match match1=new Match();
+    public void addMatch(BasketballMatchDTO basketballMatchDTO) {
+        BasketballMatch match1=new BasketballMatch();
         match1.setId(IdWorker.getId());
         match1.setMatchNumber(IdWorker.getIdStr());
-        match1.setName(match.getName());
-        match1.setMatchDate(match.getMatchDate());
-        match1.setStartTime(match.getStartTime());
-        match1.setEventId(match.getEventId());
-        match1.setTeamA(match.getTeamA());
-        match1.setTeamB(match.getTeamB());
-        match1.setStadiumId(match.getStadiumId());
-        match1.setStatusId(match.getStatusId());
+        match1.setName(basketballMatchDTO.getName());
+        match1.setMatchDate(basketballMatchDTO.getMatchDate());
+        match1.setStartTime(basketballMatchDTO.getStartTime());
+        match1.setEventId(basketballMatchDTO.getEventId());
+        match1.setTeamA(basketballMatchDTO.getTeamA());
+        match1.setTeamB(basketballMatchDTO.getTeamB());
+        match1.setStadiumId(basketballMatchDTO.getStadiumId());
+        match1.setStatusId(basketballMatchDTO.getStatusId());
         matchMapper.insert(match1);
     }
 
     @Override
-    public PageResult<SelectMatchVO> selectMatch(SelectMatchDTO selectMatchDTO) {
-        PageHelper.startPage(selectMatchDTO.getPage(), selectMatchDTO.getPageSize());
-        Page<SelectMatchVO> page = matchMapper.selectMatch(selectMatchDTO);
+    public PageResult<SelectMatchVO> selectMatch(SelectBasketballMatchDTO selectBasketballMatchDTO) {
+        PageHelper.startPage(selectBasketballMatchDTO.getPage(), selectBasketballMatchDTO.getPageSize());
+        Page<SelectMatchVO> page = matchMapper.selectMatch(selectBasketballMatchDTO);
         long total = page.getTotal();
         List<SelectMatchVO> matchList = page.getResult();
         return new PageResult<>(total, matchList);
@@ -54,7 +54,7 @@ public class MatchImpl implements MatchService {
     }
 
     @Override
-    public void updateMatch(UpdateMatchDTO updateMatchDTO) {
-        matchMapper.updateMatch(updateMatchDTO);
+    public void updateMatch(UpdateBasketballMatchDTO updateBasketballMatchDTO) {
+        matchMapper.updateMatch(updateBasketballMatchDTO);
     }
 }

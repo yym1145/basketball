@@ -52,7 +52,7 @@
         LEFT JOIN matchstatus ms ON b.status_id = ms.id
         WHERE b.id = #{matchId}
     </select>
-    <update id="updateMatch" parameterType="com.basketball.dto.match.UpdateMatchDTO">
+    <update id="updateMatch" parameterType="com.basketball.dto.basketball_match.UpdateBasketballMatchDTO">
         UPDATE basketball_match
         <set>
             <if test="name!=null">name=#{name},</if>

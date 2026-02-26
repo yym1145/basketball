@@ -1,4 +1,4 @@
-package com.basketball.dto.match;
+package com.basketball.dto.basketball_match;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -6,10 +6,11 @@ import lombok.Data;
 
 import java.sql.Time;
 import java.time.LocalDate;
-import java.time.LocalTime;
 
 @Data
-public class MatchDTO {
+public class UpdateBasketballMatchDTO {
+    @Schema(description = "id")
+    private Long id;
     @Schema(description = "赛事id")
     private String eventId;
     @Schema(description = "比赛名称")
