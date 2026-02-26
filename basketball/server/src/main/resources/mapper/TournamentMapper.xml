@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="server.mapper.TournamentMapper">
+    <resultMap id="SelectTournamentVOMap" type="com.basketball.vo.tournament.SelectTournamentVO">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="tournamentType" column="tournament_type"/>
+        <result property="startTime" column="start_time"/>
+        <result property="endTime" column="end_time"/>
+        <result property="remark" column="remark"/>
+        <collection property="teamIdList" ofType="java.lang.Long" column="team_id">
+            <result column="team_id"/>
+        </collection>
+    </resultMap>
+
+    <select id="selectTournamentDetails" resultMap="SelectTournamentVOMap">
+        SELECT
+        t.id,
+        t.name,
+        t.tournament_type,
+        t.start_time,
+        t.end_time,
+        t.remark,
+        tt.team_id
+        FROM tournament t
+        LEFT JOIN tournament_team tt ON t.id = tt.tournament_id
+        WHERE t.id = #{tournamentId}
+    </select>
+</mapper>
