@@ -6,9 +6,9 @@ import com.basketball.entity.BasketballMatch;
 import com.basketball.vo.ballMatch.SelectDetailedMatchVO;
 import com.basketball.vo.ballMatch.SelectMatchVO;
 import com.github.pagehelper.Page;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Options;
+import org.apache.ibatis.annotations.*;
+
+import java.util.List;
 
 @Mapper
 public interface MatchMapper {
@@ -22,4 +22,17 @@ public interface MatchMapper {
     SelectDetailedMatchVO selectDetailedMatch(Long matchId);
 
     void updateMatch(UpdateBasketballMatchDTO updateBasketballMatchDTO);
+
+
+    @Select("SELECT * FROM basketball_match WHERE match_number = #{matchNumber} " +
+            "AND (teama = #{teamId} OR teamb = #{teamId})")
+    List<BasketballMatch> selectByEventAndTeam(Integer matchNumber, Long teamId);
+
+    @Select("SELECT * FROM basketball_match WHERE event_id = #{eventId}")
+    List<BasketballMatch> selectByEventId(Integer eventId);
+
+    @Update("UPDATE basketball_match SET status_id = #{statusId} WHERE id = #{id}")
+    int updateStatus(Long id, Integer statusId);
+
+    int updateStatusByIds(List<Long> ids, Integer statusId);
 }

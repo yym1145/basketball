@@ -1,11 +1,13 @@
 package com.basketball.entity;
 
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
-import java.time.LocalDateTime;
 
 @Data
 public class MatchScore {
-
+    private Long id;
+    private Long matchId;
+    private Integer quarter;
+    private Integer teamaScore;
+    private Integer teambScore;
 }
