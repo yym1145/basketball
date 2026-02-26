@@ -89,4 +89,12 @@ public class TeamImpl implements TeamService {
         teamMapper.updateTeam(updateTeamDTO);
     }
 
+    @Override
+    public void deleteTeam(Long id) throws Exception {
+        Team team = teamMapper.selectById(id);
+        if (team == null) {
+            throw new Exception("球队不存在");
+        }
+        teamMapper.deleteById(id);
+    }
 }

@@ -56,4 +56,11 @@ public class TeamController {
         return Result.success("修改成功",null);
     }
 
+    @PostMapping("/delete")
+    @Operation(summary = "删除球队")
+    @ApiOperationSupport(author = "高梦燚")
+    public Result<String> deleteTeam(@Parameter(description = "球队id") Long id) throws Exception {
+        teamService.deleteTeam(id);
+        return Result.success("删除成功",null);
+    }
 }

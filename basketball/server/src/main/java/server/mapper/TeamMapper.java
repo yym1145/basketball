@@ -49,4 +49,9 @@ public interface TeamMapper {
      *修改球队
      */
     int updateTeam(UpdateTeamDTO updateTeamDTO);
+    /**
+     * 删除球队
+     */
+    @Delete("DELETE FROM team WHERE id = #{id}")
+    int deleteById(Long id);
 }
