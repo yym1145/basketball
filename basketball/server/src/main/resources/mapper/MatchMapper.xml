@@ -4,9 +4,7 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- namespace等于mapper接口类的全限定名,这样实现对应 -->
 <mapper namespace="server.mapper.MatchMapper">
-
-
-     <select id="selectMatch" resultType="com.basketball.vo.ballMatch.SelectMatchVO">
+    <select id="selectMatch" resultType="com.basketball.vo.ballMatch.SelectMatchVO">
          SELECT
          b.match_number AS id,
          b.match_number AS matchNumber,
@@ -54,4 +52,18 @@
         LEFT JOIN matchstatus ms ON b.status_id = ms.id
         WHERE b.id = #{matchId}
     </select>
+    <update id="updateMatch" parameterType="com.basketball.dto.match.UpdateMatchDTO">
+        UPDATE basketball_match
+        <set>
+            <if test="name!=null">name=#{name},</if>
+            <if test="statusId!=null">status_id=#{statusId},</if>
+            <if test="teamA!=null">teama=#{teamA},</if>
+            <if test="teamB!=null">teamb=#{teamB},</if>
+            <if test="eventId!=null">event_id=#{eventId},</if>
+            <if test="stadiumId!=null">stadium_id=#{stadiumId},</if>
+            <if test="matchDate!=null">match_date=#{matchDate},</if>
+            <if test="startTime!=null">start_time=#{startTime},</if>
+        </set>
+        WHERE id=#{id}
+    </update>
 </mapper>

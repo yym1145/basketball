@@ -3,6 +3,7 @@ package server.service.impl;
 import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.basketball.dto.match.MatchDTO;
 import com.basketball.dto.match.SelectMatchDTO;
+import com.basketball.dto.match.UpdateMatchDTO;
 import com.basketball.entity.Match;
 import com.basketball.result.PageResult;
 import com.basketball.vo.ballMatch.SelectDetailedMatchVO;
@@ -50,5 +51,10 @@ public class MatchImpl implements MatchService {
     @Override
     public SelectDetailedMatchVO selectDetailedMatch(Long matchId) {
         return matchMapper.selectDetailedMatch(matchId);
+    }
+
+    @Override
+    public void updateMatch(UpdateMatchDTO updateMatchDTO) {
+        matchMapper.updateMatch(updateMatchDTO);
     }
 }

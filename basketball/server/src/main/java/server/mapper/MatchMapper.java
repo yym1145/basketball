@@ -1,6 +1,7 @@
 package server.mapper;
 
 import com.basketball.dto.match.SelectMatchDTO;
+import com.basketball.dto.match.UpdateMatchDTO;
 import com.basketball.entity.Match;
 import com.basketball.vo.ballMatch.SelectDetailedMatchVO;
 import com.basketball.vo.ballMatch.SelectMatchVO;
@@ -19,4 +20,6 @@ public interface MatchMapper {
     Page<SelectMatchVO> selectMatch(SelectMatchDTO selectMatchDTO);
 
     SelectDetailedMatchVO selectDetailedMatch(Long matchId);
+
+    void updateMatch(UpdateMatchDTO updateMatchDTO);
 }
