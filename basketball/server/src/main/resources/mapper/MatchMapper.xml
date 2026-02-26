@@ -28,6 +28,9 @@
              <if test="name!=null">
                 b.name like concat('%',#{name},'%')
              </if>
+             <if test="statusId!=null">
+                b.status_id = #{statusId}
+             </if>
          </where>
     </select>
     <select id="selectDetailedMatch" resultType="com.basketball.vo.ballMatch.SelectDetailedMatchVO">
