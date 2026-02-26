@@ -9,7 +9,13 @@ public class CurrentUserDataVO {
     @Schema(description = "用户ID")
     private String id;
 
-    @Schema(description = "用户名称")
-    private String name;
+    @Schema(description = "名")
+    private String firstName;
+
+    @Schema(description = "性")
+    private String lastName;
+
+    @Schema(description = "电话号码")
+    private String telephone;
 
 }

@@ -2,6 +2,7 @@ package server.controller;
 
 import com.basketball.dto.user.UserLoginDTO;
 import com.basketball.result.Result;
+import com.basketball.vo.user.CurrentUserDataVO;
 import com.basketball.vo.user.UserLoginVO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
@@ -27,8 +28,15 @@ public class UserController {
 
     @PostMapping("/login")
     @Operation(summary = "登录")
-    @ApiOperationSupport(author = "汪润杰")
+    @ApiOperationSupport(author = "燕怡明")
     public Result<UserLoginVO> login(@Valid @RequestBody UserLoginDTO dto) throws JsonProcessingException {
         return Result.success("登陆成功",userService.login(dto));
+    }
+
+    @GetMapping("/getCurrentUserData")
+    @Operation(summary = "获取当前用户信息")
+    @ApiOperationSupport(author = "燕怡明")
+    public Result<CurrentUserDataVO> getCurrentUserData() {
+        return Result.success("查询成功", userService.getCurrentUserData());
     }
 }

@@ -2,6 +2,7 @@ package server.service;
 
 import com.basketball.dto.user.UserLoginDTO;
 import com.basketball.vo.role.menu.MenuVO;
+import com.basketball.vo.user.CurrentUserDataVO;
 import com.basketball.vo.user.UserLoginVO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
@@ -17,4 +18,10 @@ public interface UserService {
      * @return 用户信息，token
      */
     UserLoginVO login(UserLoginDTO dto) throws JsonProcessingException;
+
+    /**
+     * 获取当前用户信息
+     * @return 当前用户信息
+     */
+    CurrentUserDataVO getCurrentUserData();
 }

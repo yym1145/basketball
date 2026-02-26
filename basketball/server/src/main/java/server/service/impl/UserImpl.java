@@ -2,10 +2,12 @@ package server.service.impl;
 
 import com.basketball.bo.user.UserLoginData;
 import com.basketball.bo.user.UserLoginVerifyData;
+import com.basketball.context.BaseContext;
 import com.basketball.dto.user.UserLoginDTO;
 import com.basketball.enums.redis.RedisPrefix;
 import com.basketball.exception.user.UserException;
 import com.basketball.util.JwtUtil;
+import com.basketball.vo.user.CurrentUserDataVO;
 import com.basketball.vo.user.UserLoginVO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -62,5 +64,10 @@ public class UserImpl implements UserService {
                 .lastName(user.getLastName())
                 .firstName(user.getFirstName())
                 .token(token).build();
+    }
+
+    @Override
+    public CurrentUserDataVO getCurrentUserData() {
+        return userMapper.getUserBasicDataById(BaseContext.getCurrentUserId());
     }
 }
