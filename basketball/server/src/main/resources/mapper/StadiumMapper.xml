@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace等于mapper接口类的全限定名,这样实现对应 -->
+<mapper namespace="server.mapper.StadiumMapper">
+    <update id="updateStadium">
+        update stadium
+        <set>
+            name = #{name},
+            address = #{address}
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+    <select id="pageStadium" resultType="com.basketball.vo.Stadium.PageStadiumVO">
+        select id,
+        name,
+        address
+        from stadium
+        <where>
+            <if test = "name!=null">
+                stadium.name LIKE CONCAT('%',#{name},'%')
+            </if>
+        </where>
+    </select>
+</mapper>
