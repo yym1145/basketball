@@ -1,6 +1,8 @@
 package server.controller;
 
 import com.basketball.dto.tournament.AddTournamentDTO;
+import com.basketball.dto.tournament.UpdateTournamentDTO;
+import com.basketball.dto.tournament.UpdateTournamentTeamDTO;
 import com.basketball.result.Result;
 import com.basketball.vo.tournament.SelectTournamentListVO;
 import com.basketball.vo.tournament.SelectTournamentVO;
@@ -48,4 +50,19 @@ public class TournamentController {
     public Result<SelectTournamentVO> selectTournamentDetails(@Schema(description = "赛事id") @RequestParam Long id) {
         return Result.success("查询成功",tournamentService.selectTournamentDetails(id));
     }
+
+    @PostMapping("/updateTournament")
+    @Operation(summary = "修改赛事基本信息")
+    @ApiOperationSupport(author = "丁泽锋")
+    public Result updateTournament(@Valid @RequestBody UpdateTournamentDTO updateTournamentDTO) {
+        return Result.success(tournamentService.updateTournament(updateTournamentDTO));
+    }
+
+    @PostMapping("/updateTournamentTeam")
+    @Operation(summary = "修改赛事参赛队伍")
+    @ApiOperationSupport(author = "丁泽锋")
+    public Result updateTournamentTeam(@Valid @RequestBody UpdateTournamentTeamDTO updateTournamentTeamDTO) {
+        return Result.success(tournamentService.updateTournamentTeam(updateTournamentTeamDTO));
+    }
+
 }

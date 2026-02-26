@@ -28,4 +28,15 @@ public interface TournamentMapper {
     List<SelectTournamentListVO> selectTournamentList();
 
     SelectTournamentVO selectTournamentDetails(Long id);
+
+    int updateTournament(UpdateTournamentDTO updateTournamentDTO);
+
+    int updateTournamentTeam(UpdateTournamentTeamDTO updateTournamentTeamDTO);
+
+
+    @Select("select * from tournament where id = #{id}")
+    Tournament selectById(Long id);
+
+    @Delete("DELETE FROM tournament_team WHERE tournament_id = #{id} ")
+    void deleteByTournamentId(Long id);
 }

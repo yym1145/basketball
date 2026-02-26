@@ -28,4 +28,27 @@
         LEFT JOIN tournament_team tt ON t.id = tt.tournament_id
         WHERE t.id = #{tournamentId}
     </select>
+
+     <update id="updateTournament" parameterType="com.basketball.dto.tournament.UpdateTournamentDTO">
+        update tournament
+        <set>
+            <if test="name!=null and name!=''">name=#{name},</if>
+            <if test="tournamentType!=null and tournamentType!=''">tournament_type=#{tournamentType},</if>
+            <if test="startTime != null and startTime!=''">start_time=#{startTime},</if>
+            <if test="endTime != null and endTime!=''">end_time=#{endTime},</if>
+            <if test="remark != null and remark!=''">remark=#{remark}</if>
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+     <update id="updateTournamentTeam" parameterType="com.basketball.dto.tournament.UpdateTournamentTeamDTO">
+        update tournament_team
+        <set>
+            <if test="teamIdList!=null and teamIdList.size()>2">team_id=#{teamIdList},</if>
+        </set>
+        <where>
+            tournament_id = #{tournamentId}
+        </where>
+    </update>
 </mapper>
