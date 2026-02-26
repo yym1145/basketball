@@ -18,10 +18,10 @@ public class MatchDTO {
     private String teamA;
     @Schema(description = "队伍B")
     private String teamB;
-    @Schema(description = "比赛日期")
+    @Schema(description = "比赛日期,格式为yyyy-MM-dd", pattern = "yyyy-MM-dd")
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate matchDate;
-    @Schema(description = "比赛时间")
+    @Schema(description = "比赛时间,格式为HH:mm:ss", pattern = "HH:mm:ss")
     @JsonFormat(pattern = "HH:mm:ss")
     private Time startTime;
     @Schema(description = "场馆id")

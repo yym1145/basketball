@@ -3,7 +3,31 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- namespace等于mapper接口类的全限定名,这样实现对应 -->
-<mapper namespace="java.server.mapper.MatchMapper">
+<mapper namespace="server.mapper.MatchMapper">
 
 
+     <select id="selectMatch" resultType="com.basketball.vo.ballMatch.SelectMatchVO">
+         SELECT
+         b.match_number AS id,
+         b.match_number AS matchNumber,
+         b.name AS name,
+         b.status_id AS statusId,
+         b.teama AS teamAId,
+         b.teamb AS teamBId,
+         e.name AS eventName,
+         t1.name AS teamA,
+         t2.name AS teamB,
+         b.match_date AS matchDate,
+         b.start_time AS startTime,
+         b.stadium_id AS stadiumId
+         FROM basketball_match b
+         LEFT JOIN team t1 ON b.teama = t1.id
+         LEFT JOIN team t2 ON b.teamb = t2.id
+         LEFT JOIN event e ON b.event_id = e.id
+         <where>
+             <if test="name!=null">
+                b.name like concat('%',#{name},'%')
+             </if>
+         </where>
+    </select>
 </mapper>

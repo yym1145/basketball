@@ -2,14 +2,18 @@ package server.service.impl;
 
 import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.basketball.dto.match.MatchDTO;
+import com.basketball.dto.match.SelectMatchDTO;
 import com.basketball.entity.Match;
+import com.basketball.result.PageResult;
+import com.basketball.vo.ballMatch.SelectMatchVO;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import server.mapper.MatchMapper;
 import server.service.MatchService;
-import org.springframework.beans.BeanUtils;
 
-import java.sql.Time;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -31,5 +35,14 @@ public class MatchImpl implements MatchService {
         match1.setStadiumId(match.getStadiumId());
         match1.setStatusId(match.getStatusId());
         matchMapper.insert(match1);
+    }
+
+    @Override
+    public PageResult<SelectMatchVO> selectMatch(SelectMatchDTO selectMatchDTO) {
+        PageHelper.startPage(selectMatchDTO.getPage(), selectMatchDTO.getPageSize());
+        Page<SelectMatchVO> page = matchMapper.selectMatch(selectMatchDTO);
+        long total = page.getTotal();
+        List<SelectMatchVO> matchList = page.getResult();
+        return new PageResult<>(total, matchList);
     }
 }
