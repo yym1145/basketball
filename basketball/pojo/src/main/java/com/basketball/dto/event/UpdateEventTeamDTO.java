@@ -1,4 +1,4 @@
-package com.basketball.dto.tournament;
+package com.basketball.dto.event;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -7,7 +7,7 @@ import javax.validation.constraints.Size;
 import java.util.List;
 
 @Data
-public class UpdateTournamentTeamDTO {
+public class UpdateEventTeamDTO {
     @Schema(description = "赛事id",required = true)
     private Long id;
     @Schema(description = "参赛队伍id列表")

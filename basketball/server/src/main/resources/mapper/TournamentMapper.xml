@@ -2,53 +2,62 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="server.mapper.TournamentMapper">
-    <resultMap id="SelectTournamentVOMap" type="com.basketball.vo.tournament.SelectTournamentVO">
+<mapper namespace="server.mapper.EventMapper">
+    <resultMap id="SelectEventVOMap" type="com.basketball.vo.event.SelectEventVO">
         <id property="id" column="id"/>
         <result property="name" column="name"/>
-        <result property="tournamentType" column="tournament_type"/>
-        <result property="startTime" column="start_time"/>
-        <result property="endTime" column="end_time"/>
+        <result property="startDate" column="start_date"/>
+        <result property="endDate" column="end_date"/>
+        <result property="eventType" column="type_name"/>
+        <result property="status" column="status_name"/>
         <result property="remark" column="remark"/>
         <collection property="teamIdList" ofType="java.lang.Long" column="team_id">
             <result column="team_id"/>
         </collection>
     </resultMap>
 
-    <select id="selectTournamentDetails" resultMap="SelectTournamentVOMap">
+    <select id="selectEventDetails" resultMap="SelectEventVOMap">
         SELECT
         t.id,
         t.name,
-        t.tournament_type,
-        t.start_time,
-        t.end_time,
+        t.start_date,
+        t.end_date,
+        et.name as type_name,
+        es.name as status_name,
         t.remark,
         tt.team_id
-        FROM tournament t
-        LEFT JOIN tournament_team tt ON t.id = tt.tournament_id
+        FROM event t
+        LEFT JOIN teaminevent tt ON t.id = tt.event_id
+        LEFT JOIN eventstatus es ON t.status_id = es.id
+        LEFT JOIN eventtype et ON t.event_type_id = et.id
         WHERE t.id = #{tournamentId}
     </select>
 
-     <update id="updateTournament" parameterType="com.basketball.dto.tournament.UpdateTournamentDTO">
-        update tournament
+     <select id="selectEventList" resultType="com.basketball.vo.event.SelectEventListVO">
+         SELECT
+         e.id,
+         e.name,
+         e.start_date AS startDate,
+         e.end_date AS endDate,
+         et.name AS eventType,
+         es.name AS status
+         FROM event e
+         LEFT JOIN eventtype et ON e.event_type_id = et.id
+         LEFT JOIN eventstatus es ON e.status_id = es.id
+         ORDER BY e.id DESC
+    </select>
+
+    <update id="updateEvent" parameterType="com.basketball.dto.event.UpdateEventDTO">
+        update event
         <set>
             <if test="name!=null and name!=''">name=#{name},</if>
             <if test="tournamentType!=null and tournamentType!=''">tournament_type=#{tournamentType},</if>
-            <if test="startTime != null and startTime!=''">start_time=#{startTime},</if>
-            <if test="endTime != null and endTime!=''">end_time=#{endTime},</if>
+            <if test="startDate != null and startDate!=''">start_date=#{startDate},</if>
+            <if test="endDate != null and endDate!=''">end_date=#{endDate},</if>
             <if test="remark != null and remark!=''">remark=#{remark}</if>
         </set>
         <where>
             id = #{id}
-        </where>
-    </update>
-     <update id="updateTournamentTeam" parameterType="com.basketball.dto.tournament.UpdateTournamentTeamDTO">
-        update tournament_team
-        <set>
-            <if test="teamIdList!=null and teamIdList.size()>2">team_id=#{teamIdList},</if>
-        </set>
-        <where>
-            tournament_id = #{tournamentId}
         </where>
     </update>
 </mapper>
