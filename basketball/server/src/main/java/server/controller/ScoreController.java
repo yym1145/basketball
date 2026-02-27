@@ -42,3 +42,12 @@ public class ScoreController {
         return Result.success(scoreService.clearEventScore(eventId));
     }
 }
+
+
+
+
+
+
+
+
+
