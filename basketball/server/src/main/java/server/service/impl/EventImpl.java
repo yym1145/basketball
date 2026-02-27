@@ -14,12 +14,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import server.mapper.EventMapper;
 import server.service.EventService;
-import com.basketball.result.Result;
-import lombok.RequiredArgsConstructor;
-
-import org.springframework.stereotype.Service;
-import server.mapper.EventMapper;
-import server.service.EventService;
 
 import java.util.List;
 
@@ -65,7 +59,7 @@ public class EventImpl implements EventService {
     }
 
     @Override
-    public Object updateEventTeam(UpdateEventTeamDTO updateEventTeamDTO) {
+    public Result<String> updateEventTeam(UpdateEventTeamDTO updateEventTeamDTO) {
         Event event = eventMapper.selectById(updateEventTeamDTO.getId());
         if (event == null) {
             throw new IllegalArgumentException("赛事不存在");

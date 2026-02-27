@@ -1,7 +1,6 @@
 package server.mapper;
 
 import com.basketball.dto.event.UpdateEventDTO;
-import com.basketball.dto.event.UpdateEventTeamDTO;
 import com.basketball.entity.Event;
 import com.basketball.entity.TeamInEvent;
 import com.basketball.vo.event.SelectEventListVO;

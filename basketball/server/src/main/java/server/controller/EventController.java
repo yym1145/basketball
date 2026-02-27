@@ -31,6 +31,11 @@ public class EventController {
 
     private final EventService eventService;
 
+    /**
+     * 添加赛事
+     * @param addEventDTO
+     * @return
+     */
     @PostMapping("/addEvent")
     @Operation(summary = "添加赛事")
     @ApiOperationSupport(author = "丁泽锋")
@@ -38,6 +43,10 @@ public class EventController {
         return Result.success("添加成功,id:", eventService.addEvent(addEventDTO));
     }
 
+    /**
+     * 获取赛事列表
+     * @return
+     */
     @PostMapping("/selectEventList")
     @Operation(summary = "获取赛事列表")
     @ApiOperationSupport(author = "丁泽锋")
@@ -45,13 +54,23 @@ public class EventController {
         return Result.success("查询成功",eventService.selectEventList());
     }
 
-    @PostMapping("/selectEventDetails")
+    /**
+     * 获取赛事详情
+     * @param id
+     * @return
+     */
+    @PostMapping("/selectEventDetails/{id}")
     @Operation(summary = "获取赛事详情")
     @ApiOperationSupport(author = "丁泽锋")
     public Result<SelectEventVO> selectEventDetails(@Schema(description = "赛事id") @RequestParam Long id) {
         return Result.success("查询成功",eventService.selectEventDetails(id));
     }
 
+    /**
+     * 修改赛事基本信息
+     * @param updateEventDTO
+     * @return
+     */
     @PostMapping("/updateEvent")
     @Operation(summary = "修改赛事基本信息")
     @ApiOperationSupport(author = "丁泽锋")
@@ -59,12 +78,18 @@ public class EventController {
         return Result.success(eventService.updateEvent(updateEventDTO));
     }
 
+    /**
+     * 修改赛事参赛队伍
+     * @param updateEventTeamDTO
+     * @return
+     */
     @PostMapping("/updateEventTeam")
     @Operation(summary = "修改赛事参赛队伍")
     @ApiOperationSupport(author = "丁泽锋")
     public Result updateEventTeam(@Valid @RequestBody UpdateEventTeamDTO updateEventTeamDTO) {
         return Result.success(eventService.updateEventTeam(updateEventTeamDTO));
     }
+
     /**
      * 删除赛事
      * @param id
