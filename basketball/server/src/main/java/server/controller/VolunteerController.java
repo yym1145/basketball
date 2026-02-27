@@ -37,6 +37,7 @@ public class VolunteerController {
     public Result deleteVolunteer(@RequestParam Long id) {
         volunteerService.deleteVolunteer(id);
         return Result.success("删除志愿者成功");
+
     }
 }
 
