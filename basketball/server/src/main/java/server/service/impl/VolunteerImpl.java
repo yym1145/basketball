@@ -24,4 +24,9 @@ public class VolunteerImpl implements VolunteerService {
         volunteer.setFirstName(firstName);
         volunteerMapper.insert(volunteer);
     }
+
+    @Override
+    public void deleteVolunteer(Long id) {
+        volunteerMapper.deleteById(id);
+    }
 }
