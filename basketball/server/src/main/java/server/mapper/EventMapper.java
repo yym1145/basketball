@@ -11,6 +11,7 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
+
 import java.util.List;
 
 @Mapper
@@ -35,4 +36,19 @@ public interface EventMapper {
 
     @Delete("DELETE FROM teaminevent WHERE event_id = #{id} ")
     void deleteByEventId(Long id);
+
+    /**
+     * 查询需要删除的赛事id是否存在
+     * @param id
+     * @return
+     */
+    @Select("select event.id from event where id=#{id}")
+    boolean selectEventById(Long id);
+
+    /**
+     * 删除赛事
+     * @param id
+     */
+    @Delete("delete from event where id=#{id}")
+    void deleteEventById(Long id);
 }

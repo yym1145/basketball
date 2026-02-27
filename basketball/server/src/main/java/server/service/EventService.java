@@ -6,6 +6,7 @@ import com.basketball.dto.event.UpdateEventTeamDTO;
 import com.basketball.result.Result;
 import com.basketball.vo.event.SelectEventListVO;
 import com.basketball.vo.event.SelectEventVO;
+import org.springframework.data.redis.core.script.ReactiveScriptExecutor;
 
 import java.util.List;
 
@@ -19,4 +20,10 @@ public interface EventService {
     Result<String> updateEvent(UpdateEventDTO updateEventDTO);
 
     Object updateEventTeam(UpdateEventTeamDTO updateEventTeamDTO);
+
+    /**
+     * 删除赛事
+     * @param id
+     */
+    Result deleteEvent(Long id);
 }

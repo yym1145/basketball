@@ -14,6 +14,12 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import server.mapper.EventMapper;
 import server.service.EventService;
+import com.basketball.result.Result;
+import lombok.RequiredArgsConstructor;
+
+import org.springframework.stereotype.Service;
+import server.mapper.EventMapper;
+import server.service.EventService;
 
 import java.util.List;
 
@@ -73,5 +79,16 @@ public class EventImpl implements EventService {
             eventMapper.addTeamInEvent(teamInEvent);
         }
         return Result.success("修改成功");
+    }
+
+    @Override
+    public Result deleteEvent(Long id) {
+        Result result = new Result<>();
+        if (eventMapper.selectEventById(id)) {
+            eventMapper.deleteEventById(id);
+            result.setMsg("删除成功");
+            return result;
+        }
+        return result;
     }
 }

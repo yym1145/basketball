@@ -1,24 +1,13 @@
 package com.basketball.entity;
 
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
-import java.time.LocalDateTime;
 
 @Data
 public class MatchScore {
-    @Schema(description = "赛事id")
-    private String eventId;
-    @Schema(description = "队伍A")
-    private String teamA;
-    @Schema(description = "队伍B")
-    private String teamB;
-    @Schema(description = "比赛日期")
-    private LocalDateTime matchDate;
-    @Schema(description = "比赛时间")
-    private LocalDateTime matchTime;
-    @Schema(description = "场馆id")
-    private String stadiumId;
-    @Schema(description = "状态id")
-    private Integer statusId;
+    private Long id;
+    private Long matchId;
+    private Integer quarter;
+    private Integer teamaScore;
+    private Integer teambScore;
 }

@@ -9,7 +9,7 @@
         name,
         contact_phone,
         address,
-        logo,
+
         established_date
         from team
         <where>
@@ -23,7 +23,7 @@
         SELECT
         id,
         name,
-        logo,
+
         established_date AS establishedDate,
         contact_phone AS contactPhone,
         address
@@ -46,4 +46,34 @@
         </if>
         ORDER BY p.shirt_number ASC
     </select>
+    <select id="selectByName" resultType="com.basketball.entity.Team">
+        SELECT
+        id,
+        name,
+        contact_phone AS contactPhone,
+        address,
+        logo,
+        established_date AS establishedDate
+        FROM team
+        WHERE name = #{name}
+        LIMIT 1
+    </select>
+    <update id="updateTeam">
+        UPDATE team
+        <set>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="contactPhone != null">
+                contact_phone = #{contactPhone},
+            </if>
+            <if test="address != null">
+                address = #{address},
+            </if>
+            <if test="logoBytes != null">
+                logo = #{logoBytes, jdbcType=BLOB},
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
 </mapper>

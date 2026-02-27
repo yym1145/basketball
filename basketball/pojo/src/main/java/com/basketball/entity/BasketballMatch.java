@@ -5,11 +5,9 @@ import lombok.Data;
 
 import java.sql.Time;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 @Data
-public class Match {
+public class BasketballMatch {
     @Schema(description = "id")
     private Long id;
     @Schema(description = "比赛id")

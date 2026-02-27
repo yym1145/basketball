@@ -18,7 +18,7 @@
          b.match_date AS matchDate,
          b.start_time AS startTime,
          b.stadium_id AS stadiumId
-         FROM basketball_match b
+         FROM `match` b
          LEFT JOIN team t1 ON b.teama = t1.id
          LEFT JOIN team t2 ON b.teamb = t2.id
          LEFT JOIN event e ON b.event_id = e.id
@@ -44,7 +44,7 @@
         b.stadium_id AS stadiumId,
         s.name AS stadiumName,
         ms.name AS statusName
-        FROM basketball_match b
+        FROM `match` b
         LEFT JOIN team t1 ON b.teama = t1.id
         LEFT JOIN team t2 ON b.teamb = t2.id
         LEFT JOIN event e ON b.event_id = e.id
@@ -52,8 +52,8 @@
         LEFT JOIN matchstatus ms ON b.status_id = ms.id
         WHERE b.id = #{matchId}
     </select>
-    <update id="updateMatch" parameterType="com.basketball.dto.match.UpdateMatchDTO">
-        UPDATE basketball_match
+    <update id="updateMatch" parameterType="com.basketball.dto.basketball_match.UpdateBasketballMatchDTO">
+        UPDATE `match`
         <set>
             <if test="name!=null">name=#{name},</if>
             <if test="statusId!=null">status_id=#{statusId},</if>
@@ -65,5 +65,14 @@
             <if test="startTime!=null">start_time=#{startTime},</if>
         </set>
         WHERE id=#{id}
+    </update>
+
+    <update id="updateStatusByIds">
+        UPDATE `match`
+        SET status_id = #{statusId}
+        WHERE id IN
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
     </update>
 </mapper>

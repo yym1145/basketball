@@ -3,6 +3,7 @@ package com.basketball.entity;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Data
@@ -16,7 +17,7 @@ public class Team {
     @Schema(description = "球队地址", required = true)
     private String address;
     @Schema(description = "球队Logo")
-    private String logo;
+    private byte[] logo;
     @Schema(description = "成立日期")
-    private Date establishedDate;
+    private LocalDate establishedDate;
 }

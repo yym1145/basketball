@@ -2,8 +2,11 @@
 <project version="4">
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/basketball/common/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/basketball/common/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/basketball/pojo/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/basketball/pojo/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/basketball/server/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/basketball/server/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/basketball/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/basketball/src/main/resources" charset="UTF-8" />
   </component>
