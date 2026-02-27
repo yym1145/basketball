@@ -1,5 +1,6 @@
 package server.controller;
 
+import com.basketball.dto.match_score.DeleteTeamScoreDTO;
 import com.basketball.dto.match_score.ManualAdjustScoreDTO;
 import com.basketball.result.Result;
 import io.swagger.v3.oas.annotations.Operation;

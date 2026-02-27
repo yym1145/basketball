@@ -1,6 +1,7 @@
 package server.service;
 
 //import com.basketball.dto.match_score.DeleteTeamScoreDTO;
+import com.basketball.dto.match_score.DeleteTeamScoreDTO;
 import com.basketball.dto.match_score.ManualAdjustScoreDTO;
 
 public interface ScoreService {

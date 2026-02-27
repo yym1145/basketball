@@ -1,6 +1,7 @@
 package server.service.impl;
 
 //import com.basketball.dto.match_score.DeleteTeamScoreDTO;
+import com.basketball.dto.match_score.DeleteTeamScoreDTO;
 import com.basketball.dto.match_score.ManualAdjustScoreDTO;
 import com.basketball.entity.BasketballMatch;
 import com.basketball.entity.MatchScore;
