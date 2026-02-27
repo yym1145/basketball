@@ -30,6 +30,14 @@ public class VolunteerController {
         volunteerService.addVolunteer(volunteerDTO);
         return Result.success("添加志愿者成功");
     }
+
+    @PostMapping("/deleteVolunteer")
+    @Operation(summary = "删除志愿者")
+    @ApiOperationSupport(author = "卢锐")
+    public Result deleteVolunteer(@RequestParam Long id) {
+        volunteerService.deleteVolunteer(id);
+        return Result.success("删除志愿者成功");
+    }
 }
 
 
