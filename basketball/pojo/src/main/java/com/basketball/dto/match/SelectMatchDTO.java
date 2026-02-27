@@ -1,10 +1,10 @@
-package com.basketball.dto.basketball_match;
+package com.basketball.dto.match;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 @Data
-public class SelectBasketballMatchDTO {
+public class SelectMatchDTO {
     @Schema(description = "比赛名称")
     private String name;
     @Schema(description = "比赛状态")

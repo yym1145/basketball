@@ -1,10 +1,10 @@
 package server.controller;
 
-import com.basketball.dto.basketball_match.BasketballMatchDTO;
+import com.basketball.dto.match.MatchDTO;
 
-import com.basketball.dto.basketball_match.DeleteBatchBasketballMatchDTO;
-import com.basketball.dto.basketball_match.SelectBasketballMatchDTO;
-import com.basketball.dto.basketball_match.UpdateBasketballMatchDTO;
+import com.basketball.dto.match.DeleteBatchMatchDTO;
+import com.basketball.dto.match.SelectMatchDTO;
+import com.basketball.dto.match.UpdateMatchDTO;
 import com.basketball.result.PageResult;
 import com.basketball.result.Result;
 import com.basketball.vo.ballMatch.SelectDetailedMatchVO;
@@ -13,7 +13,6 @@ import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
@@ -25,20 +24,20 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/basketballMatch")
+@RequestMapping("/Match")
 @CrossOrigin
 @Slf4j
 @RequiredArgsConstructor
 @Tag(name = "比赛管理")
 @Validated
-public class BasketballMatchController {
+public class MatchController {
 
     private final MatchService matchService;
 
     @PostMapping("/addBasketballMatch")
     @Operation(summary = "新增比赛")
     @ApiOperationSupport(author = "卢锐")
-    public Result addMatch(@RequestBody BasketballMatchDTO matchDTO) {
+    public Result addMatch(@RequestBody MatchDTO matchDTO) {
         matchService.addMatch(matchDTO);
         return Result.success("新增比赛成功");
     }
@@ -46,8 +45,8 @@ public class BasketballMatchController {
     @PostMapping("/selectBasketballMatch")
     @Operation(summary = "查询比赛")
     @ApiOperationSupport(author = "卢锐")
-    public Result<PageResult<SelectMatchVO>> selectMatch(@RequestBody SelectBasketballMatchDTO selectBasketballMatchDTO) {
-        return Result.success("查询比赛成功", matchService.selectMatch(selectBasketballMatchDTO));
+    public Result<PageResult<SelectMatchVO>> selectMatch(@RequestBody SelectMatchDTO selectMatchDTO) {
+        return Result.success("查询比赛成功", matchService.selectMatch(selectMatchDTO));
     }
 
 
@@ -61,8 +60,8 @@ public class BasketballMatchController {
     @PostMapping("/updateBasketballMatch")
     @Operation(summary = "更新比赛")
     @ApiOperationSupport(author = "卢锐")
-    public Result updateMatch(@RequestBody UpdateBasketballMatchDTO updateBasketballMatchDTO) {
-        matchService.updateMatch(updateBasketballMatchDTO);
+    public Result updateMatch(@RequestBody UpdateMatchDTO updateMatchDTO) {
+        matchService.updateMatch(updateMatchDTO);
         return Result.success("更新比赛成功");
     }
 
@@ -82,9 +81,9 @@ public class BasketballMatchController {
     @PostMapping("/deleteBatchBasketballMatch")
     @Operation(summary = "批量删除比赛")
     @ApiOperationSupport(author = "卢锐")
-    public Result deleteBatchMatch(@RequestBody DeleteBatchBasketballMatchDTO deleteBatchBasketballMatchDTO) {
+    public Result deleteBatchMatch(@RequestBody DeleteBatchMatchDTO deleteBatchMatchDTO) {
         List<Long> errorList = new ArrayList<>();
-        for (Long matchId : deleteBatchBasketballMatchDTO.getIdList()) {
+        for (Long matchId : deleteBatchMatchDTO.getIdList()) {
             try {
                 log.info("成功删除ID为{}的比赛", matchId);
                 matchService.deleteBatchMatch(matchId);

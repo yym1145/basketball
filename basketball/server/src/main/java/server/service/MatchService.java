@@ -1,20 +1,20 @@
 package server.service;
 
-import com.basketball.dto.basketball_match.BasketballMatchDTO;
-import com.basketball.dto.basketball_match.SelectBasketballMatchDTO;
-import com.basketball.dto.basketball_match.UpdateBasketballMatchDTO;
+import com.basketball.dto.match.MatchDTO;
+import com.basketball.dto.match.SelectMatchDTO;
+import com.basketball.dto.match.UpdateMatchDTO;
 import com.basketball.result.PageResult;
 import com.basketball.vo.ballMatch.SelectDetailedMatchVO;
 import com.basketball.vo.ballMatch.SelectMatchVO;
 
 public interface MatchService {
-    void addMatch(BasketballMatchDTO match);
+    void addMatch(MatchDTO match);
 
-    PageResult<SelectMatchVO> selectMatch(SelectBasketballMatchDTO matchDTO);
+    PageResult<SelectMatchVO> selectMatch(SelectMatchDTO matchDTO);
 
     SelectDetailedMatchVO selectDetailedMatch(Long matchId);
 
-    void updateMatch(UpdateBasketballMatchDTO updateBasketballMatchDTO);
+    void updateMatch(UpdateMatchDTO updateMatchDTO);
 
     void deleteMatch(Long matchId);
 

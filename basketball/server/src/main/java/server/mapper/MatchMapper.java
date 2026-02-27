@@ -1,7 +1,7 @@
 package server.mapper;
 
-import com.basketball.dto.basketball_match.SelectBasketballMatchDTO;
-import com.basketball.dto.basketball_match.UpdateBasketballMatchDTO;
+import com.basketball.dto.match.SelectMatchDTO;
+import com.basketball.dto.match.UpdateMatchDTO;
 import com.basketball.entity.BasketballMatch;
 import com.basketball.vo.ballMatch.SelectDetailedMatchVO;
 import com.basketball.vo.ballMatch.SelectMatchVO;
@@ -17,11 +17,11 @@ public interface MatchMapper {
     @Options(useGeneratedKeys = true, keyProperty = "id")
     void insert(BasketballMatch match1);
 
-    Page<SelectMatchVO> selectMatch(SelectBasketballMatchDTO selectBasketballMatchDTO);
+    Page<SelectMatchVO> selectMatch(SelectMatchDTO selectMatchDTO);
 
     SelectDetailedMatchVO selectDetailedMatch(Long matchId);
 
-    void updateMatch(UpdateBasketballMatchDTO updateBasketballMatchDTO);
+    void updateMatch(UpdateMatchDTO updateMatchDTO);
 
 
     @Select("SELECT * FROM `match` WHERE match_number = #{matchNumber} " +
