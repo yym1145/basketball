@@ -13,7 +13,6 @@ public class VolunteerImpl implements VolunteerService {
 
     private final VolunteerMapper volunteerMapper;
 
-
     @Override
     public void addVolunteer(VolunteerDTO volunteerDTO) {
         Volunteer volunteer=new Volunteer();
