@@ -1,6 +1,5 @@
 package server.controller;
 
-import com.basketball.dto.match_score.DeleteTeamScoreDTO;
 import com.basketball.dto.match_score.ManualAdjustScoreDTO;
 import com.basketball.result.Result;
 import io.swagger.v3.oas.annotations.Operation;
@@ -29,12 +28,12 @@ public class ScoreController {
         return Result.success("调整成功");
     }
 
-    @PostMapping("/deleteTeamScore")
-    @Operation(summary = "删除球队积分记录(仅一场比赛)")
-    public Result<String> deleteTeamScore(@RequestBody @Validated DeleteTeamScoreDTO deleteTeamScoreDTO) throws Exception {
-        scoreService.deleteTeamScore(deleteTeamScoreDTO);
-        return Result.success("");
-    }
+//    @PostMapping("/deleteTeamScore")
+//    @Operation(summary = "删除球队积分记录(仅一场比赛)")
+//    public Result<String> deleteTeamScore(@RequestBody @Validated DeleteTeamScoreDTO deleteTeamScoreDTO) throws Exception {
+//        scoreService.deleteTeamScore(deleteTeamScoreDTO);
+//        return Result.success("");
+//    }
 
     @PostMapping("/clearEventScore")
     @Operation(summary = "清空赛事所有积分（清空该赛事所有比分）")

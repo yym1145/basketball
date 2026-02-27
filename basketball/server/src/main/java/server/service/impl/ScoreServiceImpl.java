@@ -1,6 +1,6 @@
 package server.service.impl;
 
-import com.basketball.dto.match_score.DeleteTeamScoreDTO;
+//import com.basketball.dto.match_score.DeleteTeamScoreDTO;
 import com.basketball.dto.match_score.ManualAdjustScoreDTO;
 import com.basketball.entity.BasketballMatch;
 import com.basketball.entity.MatchScore;
@@ -34,21 +34,21 @@ public class ScoreServiceImpl implements ScoreService {
 
     }
 
-    @Override
-    public void deleteTeamScore(DeleteTeamScoreDTO deleteTeamScoreDTO) throws Exception {
-        List<BasketballMatch> matches = matchMapper.selectByEventAndTeam(deleteTeamScoreDTO.getMatchNumber(), deleteTeamScoreDTO.getTeamId());
-
-        if (matches.isEmpty()) {
-            throw new Exception("该球队在此赛事无比赛记录");
-        }
-        for (BasketballMatch match : matches) {
-            matchScoreMapper.deleteByMatchId(match.getId());
-        }
-
-        for (BasketballMatch match : matches) {
-            matchMapper.updateStatus(match.getId(), 4);
-        }
-    }
+//    @Override
+//    public void deleteTeamScore(DeleteTeamScoreDTO deleteTeamScoreDTO) throws Exception {
+//        List<BasketballMatch> matches = matchMapper.selectByEventAndTeam(deleteTeamScoreDTO.getMatchNumber(), deleteTeamScoreDTO.getTeamId());
+//
+//        if (matches.isEmpty()) {
+//            throw new Exception("该球队在此赛事无比赛记录");
+//        }
+//        for (BasketballMatch match : matches) {
+//            matchScoreMapper.deleteByMatchId(match.getId());
+//        }
+//
+//        for (BasketballMatch match : matches) {
+//            matchMapper.updateStatus(match.getId(), 4);
+//        }
+//    }
 
     @Override
     public String clearEventScore(Integer eventId) throws Exception {

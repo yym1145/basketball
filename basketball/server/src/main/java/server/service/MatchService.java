@@ -15,4 +15,8 @@ public interface MatchService {
     SelectDetailedMatchVO selectDetailedMatch(Long matchId);
 
     void updateMatch(UpdateBasketballMatchDTO updateBasketballMatchDTO);
+
+    void deleteMatch(Long matchId);
+
+    void deleteBatchMatch(Long matchId);
 }

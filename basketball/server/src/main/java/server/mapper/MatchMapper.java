@@ -35,4 +35,10 @@ public interface MatchMapper {
     int updateStatus(Long id, Integer statusId);
 
     int updateStatusByIds(List<Long> ids, Integer statusId);
+
+    @Select("SELECT * FROM basketball_match WHERE id = #{matchId}")
+    BasketballMatch selectById(Long matchId);
+
+    @Delete("DELETE FROM basketball_match WHERE id = #{matchId}")
+    void deleteById(Long matchId);
 }
