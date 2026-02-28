@@ -14,4 +14,6 @@ public interface VolunteerMapper {
 
     @Delete("delete from volunteer where id = #{id}")
     void deleteById(Long id);
+
+    void updateVolunteer(Volunteer volunteer);
 }
