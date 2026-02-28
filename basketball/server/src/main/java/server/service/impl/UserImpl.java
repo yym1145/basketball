@@ -5,6 +5,7 @@ import com.basketball.bo.user.UserLoginVerifyData;
 import com.basketball.context.BaseContext;
 import com.basketball.dto.user.UserLoginDTO;
 import com.basketball.enums.redis.RedisPrefix;
+import com.basketball.exception.BaseException;
 import com.basketball.exception.user.UserException;
 import com.basketball.util.JwtUtil;
 import com.basketball.vo.user.CurrentUserDataVO;
@@ -44,6 +45,9 @@ public class UserImpl implements UserService {
         UserLoginVerifyData user = userMapper.getUserLoginDataByAccount(dto.getTelephone());
         if (user == null){
             throw new UserException("用户不存在");
+        }
+        if (!user.getPassword().equals(dto.getPassword())){
+            throw new BaseException("密码错误");
         }
         //设置荷载内容
         Map<String, Object> claims = new HashMap<>();
