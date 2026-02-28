@@ -1,5 +1,6 @@
 package server.controller;
 
+import com.basketball.dto.volunteer.UpdateVolunteerDTO;
 import com.basketball.dto.volunteer.VolunteerDTO;
 import com.basketball.result.Result;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
@@ -38,6 +39,15 @@ public class VolunteerController {
         volunteerService.deleteVolunteer(id);
         return Result.success("删除志愿者成功");
     }
+
+    @PostMapping("/updateVolunteer")
+    @Operation(summary = "更新志愿者")
+    @ApiOperationSupport(author = "卢锐")
+    public Result updateVolunteer(@RequestBody UpdateVolunteerDTO updateVolunteerDTO) {
+        volunteerService.updateVolunteer(updateVolunteerDTO);
+        return Result.success("更新志愿者成功");
+    }
+
 }
 
 

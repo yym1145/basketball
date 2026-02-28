@@ -1,5 +1,6 @@
 package server.service.impl;
 
+import com.basketball.dto.volunteer.UpdateVolunteerDTO;
 import com.basketball.dto.volunteer.VolunteerDTO;
 import com.basketball.entity.Volunteer;
 import lombok.RequiredArgsConstructor;
@@ -28,5 +29,17 @@ public class VolunteerImpl implements VolunteerService {
     @Override
     public void deleteVolunteer(Long id) {
         volunteerMapper.deleteById(id);
+    }
+
+    @Override
+    public void updateVolunteer(UpdateVolunteerDTO updateVolunteerDTO) {
+        Volunteer volunteer=new Volunteer();
+        String fullName = updateVolunteerDTO.getName();
+        String lastName = fullName.substring(0, 1);
+        String firstName = fullName.substring(1);
+        org.springframework.beans.BeanUtils.copyProperties(updateVolunteerDTO, volunteer);
+        volunteer.setLastName(lastName);
+        volunteer.setFirstName(firstName);
+        volunteerMapper.updateVolunteer(volunteer);
     }
 }

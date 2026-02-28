@@ -3,7 +3,21 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- namespace等于mapper接口类的全限定名,这样实现对应 -->
-<mapper namespace="java.server.mapper.VolunteerMapper">
+<mapper namespace="server.mapper.VolunteerMapper">
 
 
+    <update id="updateVolunteer">
+        update volunteer
+        <set>
+            <if test="firstName != null">first_name = #{firstName},</if>
+            <if test="lastName != null">last_name = #{lastName},</if>
+            <if test="telephone != null">telephone = #{telephone},</if>
+            <if test="email != null">email = #{email},</if>
+            <if test="gender != null">gender = #{gender},</if>
+            <if test="dateOfBirth != null">date_of_birth = #{dateOfBirth},</if>
+            <if test="occupation != null">occupation = #{occupation},</if>
+            <if test="eventId != null">event_id = #{eventId},</if>
+        </set>
+        where id = #{id}
+    </update>
 </mapper>
