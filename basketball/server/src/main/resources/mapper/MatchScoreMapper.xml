@@ -2,7 +2,6 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<!-- namespace等于mapper接口类的全限定名,这样实现对应 -->
 <mapper namespace="server.mapper.MatchScoreMapper">
     <delete id="deleteByMatchIds">
         DELETE FROM matchscore
@@ -11,4 +10,151 @@
             #{id}
         </foreach>
     </delete>
+
+    <select id="selectMatchScore" resultType="com.basketball.vo.match.score.SelectMatchScoreVO">
+        SELECT
+            DENSE_RANK() OVER (
+                ORDER BY total_points DESC, total_net_score DESC, name ASC
+            ) AS `rank`,
+            name,
+            total_points AS point,
+            CONCAT(total_wins, '-', total_losses) AS win_number,
+            total_net_score AS sum_win_point,
+            finish_match
+        FROM (
+            SELECT
+                t.name AS name,
+                SUM(
+                    CASE
+                        WHEN (t.id = m.teama AND ms.teama_score > ms.teamb_score) OR
+                        (t.id = m.teamb AND ms.teamb_score > ms.teama_score)
+                    THEN 2
+                    ELSE 1
+                END
+            ) AS total_points,
+            SUM(
+                CASE
+                    WHEN (t.id = m.teama AND ms.teama_score > ms.teamb_score) OR
+                        (t.id = m.teamb AND ms.teamb_score > ms.teama_score)
+                    THEN 1
+                    ELSE 0
+                END
+            ) AS total_wins,
+            SUM(
+                CASE
+                    WHEN (t.id = m.teama AND ms.teama_score &lt; ms.teamb_score) OR
+                        (t.id = m.teamb AND ms.teamb_score &lt; ms.teama_score)
+                    THEN 1
+                    ELSE 0
+                END
+            ) AS total_losses,
+            SUM(
+                CASE
+                    WHEN t.id = m.teama
+                    THEN ms.teama_score - ms.teamb_score
+                    ELSE ms.teamb_score - ms.teama_score
+                END
+            ) AS total_net_score,
+            (
+                SELECT COUNT(DISTINCT m2.id)
+                FROM `match` m2
+                JOIN matchscore ms2 ON m2.id = ms2.match_id
+                JOIN `event` e2 ON m2.event_id = e2.id
+                WHERE e2.name = #{eventName}
+                ) AS finish_match
+            FROM team t
+            JOIN `match` m ON (t.id = m.teama OR t.id = m.teamb)
+            JOIN matchscore ms ON m.id = ms.match_id
+            JOIN `event` e ON m.event_id = e.id
+            WHERE e.name = #{eventName}
+                AND m.match_number = #{matchNumber}
+            GROUP BY t.id, t.name
+        ) AS team_stats
+        ORDER BY `rank`;
+    </select>
+
+    <select id="pageSelectMatchScore" resultType="com.basketball.vo.match.score.PageSelectMatchScoreVO">
+        SELECT
+            DENSE_RANK() OVER (
+                ORDER BY
+                    total_points DESC,
+                    total_net_score DESC,
+                    match_count DESC,
+                    name ASC
+            ) AS `rank`,
+            name,
+            total_points AS point,
+            CONCAT(total_wins, '-', total_losses) AS win_number,
+            total_net_score AS sum_win_point,
+            finished_match_count AS finish_match
+        FROM (
+            SELECT
+                t.name AS name,
+                SUM(
+                    CASE
+                        WHEN (t.id = m.teama AND ms_total.team_a_total > ms_total.team_b_total) OR
+                            (t.id = m.teamb AND ms_total.team_b_total > ms_total.team_a_total)
+                        THEN 2
+                        WHEN (t.id = m.teama AND ms_total.team_a_total &lt; ms_total.team_b_total) OR
+                            (t.id = m.teamb AND ms_total.team_b_total &lt; ms_total.team_a_total)
+                        THEN 1
+                        ELSE 0
+                    END
+                ) AS total_points,
+                SUM(
+                    CASE
+                        WHEN (t.id = m.teama AND ms_total.team_a_total > ms_total.team_b_total) OR
+                            (t.id = m.teamb AND ms_total.team_b_total > ms_total.team_a_total)
+                        THEN 1
+                        ELSE 0
+                    END
+                ) AS total_wins,
+                SUM(
+                    CASE
+                        WHEN (t.id = m.teama AND ms_total.team_a_total &lt; ms_total.team_b_total) OR
+                            (t.id = m.teamb AND ms_total.team_b_total &lt; ms_total.team_a_total)
+                        THEN 1
+                        ELSE 0
+                    END
+                ) AS total_losses,
+                SUM(
+                    CASE
+                        WHEN t.id = m.teama THEN (ms_total.team_a_total - ms_total.team_b_total)
+                        WHEN t.id = m.teamb THEN (ms_total.team_b_total - ms_total.team_a_total)
+                        ELSE 0
+                    END
+                ) AS total_net_score,
+                COUNT(DISTINCT m.id) AS match_count,
+                (
+                    SELECT COUNT(DISTINCT m2.id)
+                    FROM `match` m2
+                    JOIN matchscore ms2 ON m2.id = ms2.match_id
+                    JOIN `event` e2 ON m2.event_id = e2.id
+                    WHERE e2.name = #{eventName}
+                        AND e2.event_type_id = #{eventType}
+                ) AS finished_match_count
+            FROM team t
+            LEFT JOIN (
+                SELECT
+                    m.id AS match_id,
+                    m.event_id,
+                    m.teama,
+                    m.teamb,
+                    SUM(ms.teama_score) AS team_a_total,
+                    SUM(ms.teamb_score) AS team_b_total
+                FROM `match` m
+                JOIN matchscore ms ON m.id = ms.match_id
+                JOIN `event` e ON m.event_id = e.id
+                WHERE e.name = #{eventName}
+                    AND e.event_type_id = #{eventType}
+                GROUP BY m.id, m.event_id, m.teama, m.teamb
+            ) ms_total ON (t.id = ms_total.teama OR t.id = ms_total.teamb)
+            LEFT JOIN `match` m ON ms_total.match_id = m.id
+            JOIN `event` e ON m.event_id = e.id
+            WHERE e.name = #{eventName}
+                AND e.event_type_id = #{eventType}
+            GROUP BY t.id, t.name
+        ) AS team_stats
+        ORDER BY `rank`
+    </select>
 </mapper>

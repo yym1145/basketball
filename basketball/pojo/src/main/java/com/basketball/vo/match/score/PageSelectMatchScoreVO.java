@@ -2,12 +2,11 @@ package com.basketball.vo.match.score;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
-
 /**
  * @author 19625
  */
 @Data
-public class SelectMatchScoreVO {
+public class PageSelectMatchScoreVO {
     @Schema(description = "排名")
     private Long rank;
 

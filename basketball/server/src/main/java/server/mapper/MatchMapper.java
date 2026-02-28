@@ -41,4 +41,7 @@ public interface MatchMapper {
 
     @Delete("DELETE FROM `match` WHERE id = #{matchId}")
     void deleteById(Long matchId);
+
+    @Select("SELECT id FROM `match` WHERE match_number = #{matchNumber}")
+    Long selectMatchId(Long matchNumber);
 }

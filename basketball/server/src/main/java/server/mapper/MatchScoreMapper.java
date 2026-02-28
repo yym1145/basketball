@@ -1,10 +1,13 @@
 package server.mapper;
 
+import com.basketball.dto.match.score.InsertMatchScoreDTO;
+import com.basketball.dto.match.score.PageSelectMatchScoreDTO;
+import com.basketball.dto.match.score.SelectMatchScoreDTO;
 import com.basketball.entity.MatchScore;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import com.basketball.vo.match.score.PageSelectMatchScoreVO;
+import com.basketball.vo.match.score.SelectMatchScoreVO;
+import com.github.pagehelper.Page;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -22,4 +25,12 @@ public interface MatchScoreMapper {
     int deleteByMatchId(Long matchId);
 
     int deleteByMatchIds(List<Long> matchIds);
+
+    List<SelectMatchScoreVO> selectMatchScore(SelectMatchScoreDTO selectMatchScoreDTO);
+
+    Page<PageSelectMatchScoreVO> pageSelectMatchScore(PageSelectMatchScoreDTO pageSelectMatchScoreDTO);
+
+    @Insert("INSERT INTO matchscore (id, match_id, quarter, teama_score, teamb_score) " +
+            "VALUES (#{id}, #{matchId}, #{quarter}, #{teamaScore}, #{teambScore})")
+    void insertMatchScore(MatchScore matchScore);
 }
