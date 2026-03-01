@@ -1,8 +1,12 @@
 package server.controller;
 
+import com.basketball.dto.volunteer.SelectVolunteerDTO;
 import com.basketball.dto.volunteer.UpdateVolunteerDTO;
 import com.basketball.dto.volunteer.VolunteerDTO;
+import com.basketball.entity.Volunteer;
+import com.basketball.result.PageResult;
 import com.basketball.result.Result;
+import com.basketball.vo.volunteer.VolunteerVO;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -46,6 +50,20 @@ public class VolunteerController {
     public Result updateVolunteer(@RequestBody UpdateVolunteerDTO updateVolunteerDTO) {
         volunteerService.updateVolunteer(updateVolunteerDTO);
         return Result.success("更新志愿者成功");
+    }
+
+    @PostMapping("/selectVolunteer")
+    @Operation(summary = "查询志愿者")
+    @ApiOperationSupport(author = "卢锐")
+    public Result<PageResult<VolunteerVO>> selectVolunteer(@RequestBody SelectVolunteerDTO selectVolunteerDTO) {
+        return Result.success("查询志愿者成功",volunteerService.selectVolunteer(selectVolunteerDTO));
+    }
+
+    @PostMapping("selectDetailVolunteer")
+    @Operation(summary = "查询志愿者详情")
+    @ApiOperationSupport(author = "卢锐")
+    public Result<VolunteerVO> selectDetailVolunteer(@RequestParam Long id) {
+        return Result.success("查询志愿者详情成功",volunteerService.selectDetailVolunteer(id));
     }
 
 }

@@ -20,4 +20,13 @@
         </set>
         where id = #{id}
     </update>
+    <select id="selectVolunteer" resultType="com.basketball.vo.volunteer.VolunteerVO"
+            parameterType="com.basketball.entity.Volunteer">
+        select * from volunteer
+        <where>
+            <if test="lastName != null">and last_name = #{lastName}</if>
+            <if test="firstName != null">and first_name = #{firstName}</if>
+            <if test="eventId != null">and event_id = #{eventId}</if>
+        </where>
+    </select>
 </mapper>

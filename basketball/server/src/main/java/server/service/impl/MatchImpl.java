@@ -69,16 +69,13 @@ public class MatchImpl implements MatchService {
         }
         try {
             matchMapper.deleteById(matchId);
-        } catch (DataIntegrityViolationException e) { // MyBatis/Spring抛出的数据完整性异常
-            // 判断异常消息中是否包含外键约束的关键字
+        } catch (DataIntegrityViolationException e) {
             if (e.getCause() instanceof SQLIntegrityConstraintViolationException) {
                 String message = e.getCause().getMessage();
                 if (message.contains("foreign key constraint") && message.contains("matchscore")) {
-                    // 抛出自定义业务异常，由全局异常处理器统一返回给前端
                     throw new BaseException("该比赛已有比分记录，无法删除");
                 }
             }
-            // 其他数据库异常，继续抛出或处理
             throw new RuntimeException("删除失败，请稍后重试", e);
         }
     }
