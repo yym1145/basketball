@@ -54,13 +54,10 @@ public class UserImpl implements UserService {
         Map<String, Object> claims = new HashMap<>();
         claims.put("id", user.getId());
 
-        // 根据 rememberMe 选择过期时间
         long ttlMillis;
         if (Boolean.TRUE.equals(dto.getRememberMe())) {
-            // 记住我：7天
             ttlMillis = 7 * 24 * 3600 * 1000L;
         } else {
-            // 不记住我：1小时（和你原来的一致）
             ttlMillis = 3600 * 1000L;
         }
         // 生成token
@@ -70,11 +67,10 @@ public class UserImpl implements UserService {
                 claims
         );
 
-        // 返回用户信息
+
         UserLoginData userLoginData = new UserLoginData();
         userLoginData.setId(user.getId());
         userLoginData.setToken(token);
-        // Redis 缓存也设置相同的过期时间
         redisTemplate.opsForValue().set(
                 RedisPrefix.USER_LOGIN_DATA.getPrefix() + user.getId(),
                 objectMapper.writeValueAsString(userLoginData),
