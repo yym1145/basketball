@@ -18,4 +18,6 @@ public class UserLoginDTO {
     @Size(min = 6, max = 20, message = "密码长度为6-20位")
     private String password;
 
+    @Schema(description = "是否记住我", defaultValue = "false")
+    private Boolean rememberMe = false;
 }

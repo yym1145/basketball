@@ -41,33 +41,53 @@ public class UserImpl implements UserService {
     private Long jwtExpiration;
     @Override
     public UserLoginVO login(UserLoginDTO dto) throws JsonProcessingException {
-        //查询用户是否存在
+        // 查询用户是否存在
         UserLoginVerifyData user = userMapper.getUserLoginDataByAccount(dto.getTelephone());
-        if (user == null){
+        if (user == null) {
             throw new UserException("用户不存在");
         }
-        if (!user.getPassword().equals(dto.getPassword())){
+        if (!user.getPassword().equals(dto.getPassword())) {
             throw new BaseException("密码错误");
         }
-        //设置荷载内容
+
+        // 设置载荷内容
         Map<String, Object> claims = new HashMap<>();
         claims.put("id", user.getId());
-        //生成token
+
+        // 根据 rememberMe 选择过期时间
+        long ttlMillis;
+        if (Boolean.TRUE.equals(dto.getRememberMe())) {
+            // 记住我：7天
+            ttlMillis = 7 * 24 * 3600 * 1000L;
+        } else {
+            // 不记住我：1小时（和你原来的一致）
+            ttlMillis = 3600 * 1000L;
+        }
+        // 生成token
         String token = JwtUtil.createJWT(
                 jwtSecretKey,
-                jwtExpiration * 3600 * 1000,
-                claims);
-        //返回用户信息
+                ttlMillis,
+                claims
+        );
+
+        // 返回用户信息
         UserLoginData userLoginData = new UserLoginData();
         userLoginData.setId(user.getId());
         userLoginData.setToken(token);
-        redisTemplate.opsForValue().set(RedisPrefix.USER_LOGIN_DATA.getPrefix() + user.getId(), objectMapper.writeValueAsString(userLoginData), jwtExpiration, TimeUnit.HOURS);
-        return UserLoginVO
-                .builder()
+        // Redis 缓存也设置相同的过期时间
+        redisTemplate.opsForValue().set(
+                RedisPrefix.USER_LOGIN_DATA.getPrefix() + user.getId(),
+                objectMapper.writeValueAsString(userLoginData),
+                ttlMillis,
+                TimeUnit.MILLISECONDS
+        );
+
+        return UserLoginVO.builder()
                 .id(user.getId())
                 .lastName(user.getLastName())
                 .firstName(user.getFirstName())
-                .token(token).build();
+                .token(token)
+                .build();
     }
 
     @Override
