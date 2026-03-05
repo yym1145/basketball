@@ -33,7 +33,7 @@ public class StadiumImpl implements StadiumService {
         Stadium stadium = new Stadium();
         stadium.setId(addStadiumDTO.getStadiumId());
         stadium.setAddress(addStadiumDTO.getAddress());
-        stadium.setStadiumName(addStadiumDTO.getStadiumName());
+        stadium.setName(addStadiumDTO.getStadiumName());
         BeanUtils.copyProperties(addStadiumDTO,stadium);
         stadiumMapper.AddStadium(stadium);
     }

@@ -8,7 +8,7 @@ public class Stadium {
     @Schema(description = "场馆ID")
     private Long id;
     @Schema(description = "场馆名字",required = true)
-    private String stadiumName;
+    private String name;
     @Schema(description = "场馆地址",required = true)
     private String address;
 }
