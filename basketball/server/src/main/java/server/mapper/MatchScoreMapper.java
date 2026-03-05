@@ -33,4 +33,14 @@ public interface MatchScoreMapper {
     @Insert("INSERT INTO matchscore (id, match_id, quarter, teama_score, teamb_score) " +
             "VALUES (#{id}, #{matchId}, #{quarter}, #{teamaScore}, #{teambScore})")
     void insertMatchScore(MatchScore matchScore);
+
+    @Update("UPDATE matchscore SET teama_score = #{teamaScore}, teamb_score = #{teambScore} " +
+            "WHERE id=#{id}")
+    int updateMatchScore(MatchScore matchScore);
+
+    @Select("SELECT * FROM matchscore WHERE id = #{id}")
+    MatchScore selectByMatchScoreId(Long id);
+
+    @Delete("DELETE FROM matchscore WHERE id = #{id}")
+    int deleteByMatchScoreId(Long id);
 }

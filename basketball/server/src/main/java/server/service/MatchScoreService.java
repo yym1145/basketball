@@ -1,8 +1,6 @@
 package server.service;
 
-import com.basketball.dto.match.score.InsertMatchScoreDTO;
-import com.basketball.dto.match.score.PageSelectMatchScoreDTO;
-import com.basketball.dto.match.score.SelectMatchScoreDTO;
+import com.basketball.dto.match.score.*;
 import com.basketball.result.PageResult;
 import com.basketball.vo.match.score.PageSelectMatchScoreVO;
 import com.basketball.vo.match.score.SelectMatchScoreVO;
@@ -15,4 +13,10 @@ public interface MatchScoreService {
     PageResult<PageSelectMatchScoreVO> pageSelectMatchScore(PageSelectMatchScoreDTO pageSelectMatchScoreDTO);
 
     void insertMatchScore(InsertMatchScoreDTO insertMatchScoreDTO);
+
+    void updateMatchScore(UpdateMatchScoreDTO updateMatchScoreDTO) throws Exception;
+
+    String deleteMatchScore(DeleteMatchScoreDTO deleteMatchScoreDTO) throws Exception;
+
+    String clearMatchScore(Long eventId) throws Exception;
 }

@@ -44,4 +44,7 @@ public interface MatchMapper {
 
     @Select("SELECT id FROM `match` WHERE match_number = #{matchNumber}")
     Long selectMatchId(Long matchNumber);
+
+    @Select("SELECT id FROM `match` WHERE event_id = #{eventId}")
+    List<Long> selectByEventId(Long eventId);
 }
