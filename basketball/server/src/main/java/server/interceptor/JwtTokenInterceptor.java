@@ -80,8 +80,6 @@ public class JwtTokenInterceptor implements HandlerInterceptor {
                 throw new BaseException("请重新登录");
             }
             UserLoginData userLoginData = objectMapper.readValue(s, UserLoginData.class);
-            List<Long> roleIds = userLoginData.getRoleIds();
-            BaseContext.setCurrentUserRoleIds(roleIds);
             if (!token.equals(userLoginData.getToken())) {
                 response.setStatus(HttpStatus.UNAUTHORIZED.value());
                 response.getWriter().write(objectMapper.writeValueAsString(Result.error("账号已在其他地方登陆")));

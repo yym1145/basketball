@@ -11,9 +11,6 @@ public class UserLoginData {
     @Schema(description = "用户ID")
     private Long id;
 
-    @Schema(description = "用户组列表")
-    private List<Long> roleIds;
-
     @Schema(description = "当前Token")
     private String token;
 }
