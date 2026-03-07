@@ -13,7 +13,7 @@ import java.util.List;
 @Mapper
 public interface MatchMapper {
 
-    @Insert("insert into `match`(id,match_number,name,event_id,teama,teamb,match_date,start_time,stadium_id,status_id) values(#{id},#{matchNumber},#{name},#{eventId},#{teamA},#{teamB},#{matchDate},#{startTime},#{stadiumId},#{statusId})")
+    @Insert("insert into `match`(id,match_number,event_id,teama,teamb,match_date,start_time,stadium_id,status_id) values(#{id},#{matchNumber},#{eventId},#{teamA},#{teamB},#{matchDate},#{startTime},#{stadiumId},#{statusId})")
     @Options(useGeneratedKeys = true, keyProperty = "id")
     void insert(BasketballMatch match1);
 
