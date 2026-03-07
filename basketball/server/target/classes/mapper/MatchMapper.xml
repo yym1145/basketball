@@ -8,7 +8,6 @@
          SELECT
          b.match_number AS id,
          b.match_number AS matchNumber,
-         b.name AS name,
          b.status_id AS statusId,
          b.teama AS teamAId,
          b.teamb AS teamBId,
@@ -23,11 +22,8 @@
          LEFT JOIN team t2 ON b.teamb = t2.id
          LEFT JOIN event e ON b.event_id = e.id
          <where>
-             <if test="name!=null">
-                b.name like concat('%',#{name},'%')
-             </if>
              <if test="statusId!=null">
-                b.status_id = #{statusId}
+                and b.status_id = #{statusId}
              </if>
          </where>
     </select>
