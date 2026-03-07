@@ -5,8 +5,6 @@ import lombok.Data;
 
 @Data
 public class SelectMatchDTO {
-    @Schema(description = "比赛名称")
-    private String name;
     @Schema(description = "比赛状态")
     private String statusId;
     @Schema(description = "页码",defaultValue = "1" ,required = true)
