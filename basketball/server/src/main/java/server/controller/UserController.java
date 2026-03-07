@@ -14,6 +14,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import server.service.UserService;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 @RestController
@@ -29,8 +31,8 @@ public class UserController {
     @PostMapping("/login")
     @Operation(summary = "登录")
     @ApiOperationSupport(author = "燕怡明")
-    public Result<UserLoginVO> login(@Valid @RequestBody UserLoginDTO dto) throws JsonProcessingException {
-        return Result.success("登陆成功",userService.login(dto));
+    public Result<UserLoginVO> login(@Valid @RequestBody UserLoginDTO dto, HttpServletResponse response) throws JsonProcessingException {
+        return Result.success("登陆成功",userService.login(dto,response));
     }
 
     @GetMapping("/getCurrentUserData")
@@ -38,5 +40,16 @@ public class UserController {
     @ApiOperationSupport(author = "燕怡明")
     public Result<CurrentUserDataVO> getCurrentUserData() {
         return Result.success("查询成功", userService.getCurrentUserData());
+    }
+
+    @PostMapping("/logout")
+    @Operation(summary = "退出登录")
+    @ApiOperationSupport(author = "燕怡明")
+    public Result<String> logout(
+            HttpServletRequest request,
+            HttpServletResponse response
+    ) {
+        userService.logout(request, response);
+        return Result.success("退出成功");
     }
 }
