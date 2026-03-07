@@ -23,14 +23,13 @@
          LEFT JOIN event e ON b.event_id = e.id
          <where>
              <if test="statusId!=null">
-                and b.status_id = #{statusId}
+                and b.status_id LIKE CONCAT('%',#{statusId},'%')
              </if>
          </where>
     </select>
     <select id="selectDetailedMatch" resultType="com.basketball.vo.ballMatch.SelectDetailedMatchVO">
         SELECT
         b.match_number AS matchNumber,
-        b.name AS name,
         b.status_id AS statusId,
         e.name AS eventName,
         t1.name AS teamA,
