@@ -59,7 +59,7 @@ public class EventController {
      * @param id
      * @return
      */
-    @PostMapping("/selectEventDetails/{id}")
+    @PostMapping("/selectEventDetails")
     @Operation(summary = "获取赛事详情")
     @ApiOperationSupport(author = "丁泽锋")
     public Result<SelectEventVO> selectEventDetails(@Schema(description = "赛事id") @RequestParam Long id) {
