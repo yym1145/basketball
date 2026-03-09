@@ -46,4 +46,11 @@ public interface FileService {
      * @return 返回结果
      */
     ResponseEntity<Resource> getFileResponseEntity(File file) throws UnsupportedEncodingException;
+
+    /**
+     * 删除单个文件
+     * @param id 需要删除的文件ID
+     * @return 是否删除成功
+     */
+    Boolean removeFile(Long id);
 }
