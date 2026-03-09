@@ -1,10 +1,15 @@
 package com.basketball.dto.match;
 
+import io.swagger.v3.oas.annotations.media.DependentSchemas;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 @Data
 public class SelectMatchDTO {
+    @Schema(description = "赛事id")
+    private String eventId;
+    @Schema(description = "场馆id")
+    private String stadiumId;
     @Schema(description = "比赛状态")
     private String statusId;
     @Schema(description = "页码",defaultValue = "1" ,required = true)
