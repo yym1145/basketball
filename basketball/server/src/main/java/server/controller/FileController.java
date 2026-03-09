@@ -40,7 +40,7 @@ public class FileController {
 
     @GetMapping("/download")
     @Operation(summary = "下载文件")
-    @ApiOperationSupport(author = "汪润杰")
+    @ApiOperationSupport(author = "燕怡明")
     public ResponseEntity<Resource> downloadFile(@NotNull(message = "文件ID为空") @RequestParam Long fileId,
                                                  @NotNull(message = "许可为空") @RequestParam String license,
                                                  @NotNull(message = "过期时间为空") @RequestParam long expire) {
