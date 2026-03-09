@@ -2,6 +2,7 @@ package server.mapper;
 
 import com.basketball.dto.match.SelectMatchDTO;
 import com.basketball.dto.match.UpdateMatchDTO;
+import com.basketball.dto.score.SelectOneEventScoreDTO;
 import com.basketball.entity.BasketballMatch;
 import com.basketball.vo.ballMatch.SelectDetailedMatchVO;
 import com.basketball.vo.ballMatch.SelectMatchVO;

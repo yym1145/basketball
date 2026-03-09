@@ -11,11 +11,7 @@ import javax.validation.constraints.NotNull;
  */
 @Data
 public class SelectMatchScoreDTO {
-    @Schema(description = "赛事名称")
-    @NotBlank(message = "赛事名称为空")
-    private String eventName;
-
-    @Schema(description = "赛事数字")
-    @NotBlank(message = "赛事数字为空")
-    private String matchNumber;
+    @Schema(description = "比赛id")
+    @NotBlank(message = "比赛id为空")
+    private Long matchId;
 }
