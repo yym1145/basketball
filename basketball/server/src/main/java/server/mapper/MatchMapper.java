@@ -2,6 +2,7 @@ package server.mapper;
 
 import com.basketball.dto.match.SelectMatchDTO;
 import com.basketball.dto.match.UpdateMatchDTO;
+import com.basketball.dto.score.SelectOneEventScoreDTO;
 import com.basketball.entity.BasketballMatch;
 import com.basketball.vo.ballMatch.SelectDetailedMatchVO;
 import com.basketball.vo.ballMatch.SelectMatchVO;
@@ -13,7 +14,7 @@ import java.util.List;
 @Mapper
 public interface MatchMapper {
 
-    @Insert("insert into `match`(id,match_number,name,event_id,teama,teamb,match_date,start_time,stadium_id,status_id) values(#{id},#{matchNumber},#{name},#{eventId},#{teamA},#{teamB},#{matchDate},#{startTime},#{stadiumId},#{statusId})")
+    @Insert("insert into `match`(id,match_number,event_id,teama,teamb,match_date,start_time,stadium_id,status_id) values(#{id},#{matchNumber},#{eventId},#{teamA},#{teamB},#{matchDate},#{startTime},#{stadiumId},#{statusId})")
     @Options(useGeneratedKeys = true, keyProperty = "id")
     void insert(BasketballMatch match1);
 

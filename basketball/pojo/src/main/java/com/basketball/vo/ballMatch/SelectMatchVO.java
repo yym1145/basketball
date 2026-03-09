@@ -13,6 +13,8 @@ public class SelectMatchVO {
     @Schema(description = "比赛id")
     private String matchNumber;
     @Schema(description = "赛事id")
+    private String eventId;
+    @Schema(description = "赛事名称")
     private String eventName;
     @Schema(description = "队伍A")
     private String teamA;

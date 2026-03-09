@@ -2,7 +2,10 @@ package server.controller;
 
 import com.basketball.dto.match_score.DeleteTeamScoreDTO;
 import com.basketball.dto.match_score.ManualAdjustScoreDTO;
+import com.basketball.dto.score.SelectOneEventScoreDTO;
 import com.basketball.result.Result;
+import com.basketball.vo.score.SelectEventScoreVO;
+import com.basketball.vo.score.SelectOneEventScoreVO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -13,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import server.service.ScoreService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/score")
@@ -40,6 +45,20 @@ public class ScoreController {
     @Operation(summary = "清空赛事所有积分（清空该赛事所有比分）")
     public Result<String> clearEventScore(@Parameter(description = "赛事id") Integer eventId) throws Exception {
         return Result.success(scoreService.clearEventScore(eventId));
+    }
+
+    @PostMapping("/selectEventScore")
+    @Operation(summary = "获取赛事积分榜")
+    public Result<List<SelectEventScoreVO>> selectEventScore
+            (@Parameter(description = "赛事id") Long eventId) throws Exception {
+        return Result.success("查询成功",scoreService.selectEventScore(eventId));
+    }
+
+    @PostMapping("/selectOneEventScore")
+    @Operation(summary = "获取单支球队赛事积分")
+    public Result<List<SelectOneEventScoreVO>> selectOneEventScore
+            (@RequestBody SelectOneEventScoreDTO selectOneEventScoreDTO) throws Exception {
+        return Result.success("查询成功",scoreService.selectOneEventScore(selectOneEventScoreDTO));
     }
 }
 

@@ -8,10 +8,10 @@
          SELECT
          b.match_number AS id,
          b.match_number AS matchNumber,
-         b.name AS name,
          b.status_id AS statusId,
          b.teama AS teamAId,
          b.teamb AS teamBId,
+         b.event_id AS eventId,
          e.name AS eventName,
          t1.name AS teamA,
          t2.name AS teamB,
@@ -23,18 +23,20 @@
          LEFT JOIN team t2 ON b.teamb = t2.id
          LEFT JOIN event e ON b.event_id = e.id
          <where>
-             <if test="name!=null">
-                b.name like concat('%',#{name},'%')
-             </if>
-             <if test="statusId!=null">
-                b.status_id = #{statusId}
-             </if>
+                 <if test="eventId!=null">
+                    and b.event_id LIKE CONCAT('%',#{eventId},'%')
+                 </if>
+                 <if test="stadiumId!=null">
+                    and b.stadium_id LIKE CONCAT('%',#{stadiumId},'%')
+                 </if>
+                 <if test="statusId!=null">
+                    and b.status_id LIKE CONCAT('%',#{statusId},'%')
+                 </if>
          </where>
     </select>
     <select id="selectDetailedMatch" resultType="com.basketball.vo.ballMatch.SelectDetailedMatchVO">
         SELECT
         b.match_number AS matchNumber,
-        b.name AS name,
         b.status_id AS statusId,
         e.name AS eventName,
         t1.name AS teamA,

@@ -35,11 +35,11 @@ public class MatchScoreController {
         return Result.success("查询比赛成功",selectMatchScoreVOList);
     }
 
-    @PostMapping("/pageSelectMatchScore")
-    @Operation(summary = "分页查询赛事结果")
+    @PostMapping("/selectEventMatchScore")
+    @Operation(summary = "查询赛事结果")
     @ApiOperationSupport(author = "厉佳铭")
-    public Result<PageResult<PageSelectMatchScoreVO>> selectMatchScore(@RequestBody PageSelectMatchScoreDTO pageSelectMatchScoreDTO) {
-        PageResult<PageSelectMatchScoreVO> pageSelectMatchScoreVO = matchScoreService.pageSelectMatchScore(pageSelectMatchScoreDTO);
+    public Result<List<PageSelectMatchScoreVO>> selectMatchScore(@RequestBody PageSelectMatchScoreDTO pageSelectMatchScoreDTO) {
+        List<PageSelectMatchScoreVO> pageSelectMatchScoreVO = matchScoreService.pageSelectMatchScore(pageSelectMatchScoreDTO);
         return Result.success("查询比赛成功",pageSelectMatchScoreVO);
     }
 

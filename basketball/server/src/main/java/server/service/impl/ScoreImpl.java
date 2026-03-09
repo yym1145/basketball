@@ -3,13 +3,18 @@ package server.service.impl;
 //import com.basketball.dto.match_score.DeleteTeamScoreDTO;
 import com.basketball.dto.match_score.DeleteTeamScoreDTO;
 import com.basketball.dto.match_score.ManualAdjustScoreDTO;
+import com.basketball.dto.score.SelectOneEventScoreDTO;
 import com.basketball.entity.BasketballMatch;
 import com.basketball.entity.MatchScore;
+import com.basketball.vo.score.SelectEventScoreVO;
+import com.basketball.vo.score.SelectOneEventScoreVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import server.mapper.MatchMapper;
 import server.mapper.MatchScoreMapper;
+import server.mapper.ScoreMapper;
+import server.mapper.TeamMapper;
 import server.service.ScoreService;
 
 import java.util.List;
@@ -17,12 +22,14 @@ import java.util.stream.Collectors;
 
 @Service
 @Slf4j
-public class ScoreServiceImpl implements ScoreService {
+public class ScoreImpl implements ScoreService {
 
     @Autowired
     private MatchScoreMapper matchScoreMapper;
     @Autowired
     private MatchMapper matchMapper;
+    @Autowired
+    private ScoreMapper scoreMapper;
 
 
     @Override
@@ -66,5 +73,26 @@ public class ScoreServiceImpl implements ScoreService {
         int deleted = matchScoreMapper.deleteByMatchIds(matchIds);
         matchMapper.updateStatusByIds(matchIds, 1);
         return "清空赛事积分完成：赛事"+eventId+"涉及比赛"+matches.size()+"场，删除比分"+deleted+"条";
+    }
+
+    @Override
+    public List<SelectEventScoreVO> selectEventScore(Long eventId) throws Exception {
+        List<Long> matches = matchMapper.selectByEventId(eventId);
+
+        if (matches.isEmpty()) {
+            throw new Exception("该赛事无比赛记录");
+        }
+        return scoreMapper.selectEventScore(matches);
+    }
+
+    @Override
+    public List<SelectOneEventScoreVO> selectOneEventScore
+            (SelectOneEventScoreDTO selectOneEventScoreDTO) throws Exception {
+        List<Long> matches = matchMapper.selectByEventId(selectOneEventScoreDTO.getEventId());
+
+        if (matches.isEmpty()) {
+            throw new Exception("该赛事无比赛记录");
+        }
+        return scoreMapper.selectOneEventScore(selectOneEventScoreDTO);
     }
 }

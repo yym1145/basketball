@@ -42,6 +42,7 @@ public class MatchController {
         return Result.success("新增比赛成功");
     }
 
+
     @PostMapping("/selectBasketballMatch")
     @Operation(summary = "查询比赛")
     @ApiOperationSupport(author = "卢锐")
@@ -61,6 +62,7 @@ public class MatchController {
     @Operation(summary = "更新比赛")
     @ApiOperationSupport(author = "卢锐")
     public Result updateMatch(@RequestBody UpdateMatchDTO updateMatchDTO) {
+
         matchService.updateMatch(updateMatchDTO);
         return Result.success("更新比赛成功");
     }

@@ -10,7 +10,7 @@ import java.util.List;
 public interface MatchScoreService {
     List<SelectMatchScoreVO> selectMatchScore(SelectMatchScoreDTO selectMatchScoreDTO);
 
-    PageResult<PageSelectMatchScoreVO> pageSelectMatchScore(PageSelectMatchScoreDTO pageSelectMatchScoreDTO);
+    List<PageSelectMatchScoreVO> pageSelectMatchScore(PageSelectMatchScoreDTO pageSelectMatchScoreDTO);
 
     void insertMatchScore(InsertMatchScoreDTO insertMatchScoreDTO);
 

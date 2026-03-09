@@ -31,7 +31,6 @@ public class MatchImpl implements MatchService {
         BasketballMatch match1=new BasketballMatch();
         match1.setId(IdWorker.getId());
         match1.setMatchNumber(IdWorker.getIdStr());
-        match1.setName(matchDTO.getName());
         match1.setMatchDate(matchDTO.getMatchDate());
         match1.setStartTime(matchDTO.getStartTime());
         match1.setEventId(matchDTO.getEventId());

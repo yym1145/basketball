@@ -9,7 +9,7 @@ import java.sql.Time;
 public class SelectDetailedMatchVO {
     @Schema(description = "比赛id")
     private String matchNumber;
-    @Schema(description = "赛事id")
+    @Schema(description = "赛事名称")
     private String eventName;
     @Schema(description = "队伍A")
     private String teamA;
