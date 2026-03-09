@@ -3,6 +3,8 @@ package server.service;
 import com.basketball.dto.player.AddPlayerDTO;
 import com.basketball.dto.player.UpdatePlayerDTO;
 import com.basketball.entity.Player;
+import com.basketball.vo.player.SelectPlayerVO;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface PlayerService {
 
@@ -11,14 +13,14 @@ public interface PlayerService {
      * @param addPlayerDTO
      * @return
      */
-    String addPlayer(AddPlayerDTO addPlayerDTO);
+    String addPlayer(AddPlayerDTO addPlayerDTO, MultipartFile photo);
 
      /**
      * 查询球员
      * @param id
      * @return
      */
-    Player selectPlayer(String id);
+    SelectPlayerVO selectPlayer(String id);
 
      /**
       * 删除球员

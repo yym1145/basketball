@@ -3,6 +3,7 @@ package server.mapper;
 import com.basketball.entity.Player;
 import com.basketball.entity.Position;
 import com.basketball.entity.Team;
+import com.basketball.vo.player.SelectPlayerVO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.apache.ibatis.annotations.*;
 
@@ -39,8 +40,8 @@ public interface PlayerMapper {
      * @param id 球员id
      * @return 球员信息
      */
-     @Select("select * from player where id = #{id}")
-    Player selectPlayer(String id);
+
+     SelectPlayerVO selectPlayer(String id);
 
      /**
      * 删除球员
@@ -54,4 +55,12 @@ public interface PlayerMapper {
      * @param player 球员信息
      */
     void updatePlayer(Player player);
+
+     /**
+     * 根据球员id查询球员信息
+     * @param id 球员id
+     * @return 球员信息
+     */
+    @Select("select * from player where id = #{id}")
+    Player getPlayer(String id);
 }

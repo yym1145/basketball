@@ -16,6 +16,13 @@ spring:
     database: 0
 
 
+minio:
+  endpoint: "http://115.29.195.127:9000"
+  accessKey: "minioadmin"
+  secretKey: "minioadmin"
+  bucket: "basketball"
+
+
 server:
   port: 8081
   servlet:
@@ -26,16 +33,21 @@ server:
 
 jwt:
   secretKey: "hVg1LcycfyZCJd0YPVujGKE1KtL7ntmHEHmXFAE10jcwPRopYiVAxQcaUxB4ZKFgDUCgBxY8ujMU4ZuNuhciAjPUmWG199ztEXwy"
-  expiration: 12 #???? ??
+
+file:
+  url: " http://115.29.195.127:8081/file/download"
+  pre-signature:
+    secret-key : "MKYYRDzdKc23uM1VNqiNh4shzCGcfpH0"
+    expire: 5
 
 knife4j:
   enable: true
 
 mybatis-plus:
   mapper-locations: classpath:mapper/*.xml
-  type-aliases-package: com.yzhszgq.entity
+  type-aliases-package: com.basketball.entity
   configuration:
     map-underscore-to-camel-case: true
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     default-enum-type-handler: org.apache.ibatis.type.EnumOrdinalTypeHandler
-  type-enums-package: com.test4.enums
+  type-enums-package: com.basketball.enums
