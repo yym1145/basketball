@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="server.mapper.ScoreMapper">
+
+    <select id="selectEventScore" resultType="com.basketball.vo.score.SelectEventScoreVO">
+        SELECT
+            DENSE_RANK() OVER (
+                ORDER BY score DESC
+            ) AS `rank`,
+            name,
+            score
+            FROM (
+                 SELECT
+                     t.`name` AS name,
+                     SUM(
+                        CASE
+                            WHEN (t.id = m.teama AND ms.teama_score > ms.teamb_score) OR
+                                (t.id = m.teamb AND ms.teamb_score > ms.teama_score)
+                                THEN 2
+                                ELSE 1
+                            END
+                     ) AS score
+                 FROM team t
+                 JOIN `match` m ON (t.id = m.teama OR t.id = m.teamb)
+                 JOIN `event` e ON m.event_id=e.id
+                 JOIN matchscore ms ON m.id = ms.match_id
+                 WHERE e.id=#{eventId}
+                 GROUP BY t.id, t.name
+             ) AS score
+        ORDER BY score DESC;
+    </select>
+
+     <select id="selectOneEventScore" resultType="com.basketball.vo.score.SelectOneEventScoreVO">
+        SELECT
+            SUM(
+                CASE
+                    WHEN (t.id = m.teama AND ms.teama_score > ms.teamb_score) OR
+                        (t.id = m.teamb AND ms.teamb_score > ms.teama_score)
+                        THEN 2
+                        ELSE 1
+                    END
+            ) AS score
+        FROM team t
+        JOIN `match` m ON (t.id = m.teama OR t.id = m.teamb)
+        JOIN `event` e ON m.event_id=e.id
+        JOIN matchscore ms ON m.id = ms.match_id
+        WHERE e.id=#{eventId} AND t.id=#{teamId}
+        GROUP BY t.id;
+    </select>
+
+</mapper>

@@ -28,7 +28,7 @@ public interface MatchScoreMapper {
 
     List<SelectMatchScoreVO> selectMatchScore(SelectMatchScoreDTO selectMatchScoreDTO);
 
-    Page<PageSelectMatchScoreVO> pageSelectMatchScore(PageSelectMatchScoreDTO pageSelectMatchScoreDTO);
+    List<PageSelectMatchScoreVO> pageSelectMatchScore(PageSelectMatchScoreDTO pageSelectMatchScoreDTO);
 
     @Insert("INSERT INTO matchscore (id, match_id, quarter, teama_score, teamb_score) " +
             "VALUES (#{id}, #{matchId}, #{quarter}, #{teamaScore}, #{teambScore})")

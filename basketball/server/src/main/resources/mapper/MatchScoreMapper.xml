@@ -60,14 +60,12 @@
                 FROM `match` m2
                 JOIN matchscore ms2 ON m2.id = ms2.match_id
                 JOIN `event` e2 ON m2.event_id = e2.id
-                WHERE e2.name = #{eventName}
                 ) AS finish_match
             FROM team t
             JOIN `match` m ON (t.id = m.teama OR t.id = m.teamb)
             JOIN matchscore ms ON m.id = ms.match_id
             JOIN `event` e ON m.event_id = e.id
-            WHERE e.name = #{eventName}
-                AND m.match_number = #{matchNumber}
+            WHERE m.id = #{matchId}
             GROUP BY t.id, t.name
         ) AS team_stats
         ORDER BY `rank`;
@@ -130,8 +128,7 @@
                     FROM `match` m2
                     JOIN matchscore ms2 ON m2.id = ms2.match_id
                     JOIN `event` e2 ON m2.event_id = e2.id
-                    WHERE e2.name = #{eventName}
-                        AND e2.event_type_id = #{eventType}
+                    WHERE e2.id = #{eventId}
                 ) AS finished_match_count
             FROM team t
             LEFT JOIN (
@@ -145,16 +142,14 @@
                 FROM `match` m
                 JOIN matchscore ms ON m.id = ms.match_id
                 JOIN `event` e ON m.event_id = e.id
-                WHERE e.name = #{eventName}
-                    AND e.event_type_id = #{eventType}
+                WHERE e.id = #{eventId}
                 GROUP BY m.id, m.event_id, m.teama, m.teamb
             ) ms_total ON (t.id = ms_total.teama OR t.id = ms_total.teamb)
             LEFT JOIN `match` m ON ms_total.match_id = m.id
             JOIN `event` e ON m.event_id = e.id
-            WHERE e.name = #{eventName}
-                AND e.event_type_id = #{eventType}
+            WHERE e.id = #{eventId}
             GROUP BY t.id, t.name
         ) AS team_stats
-        ORDER BY `rank`
+        ORDER BY `rank`;
     </select>
 </mapper>

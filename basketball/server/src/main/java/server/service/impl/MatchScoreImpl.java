@@ -34,12 +34,8 @@ public class MatchScoreImpl implements MatchScoreService {
     }
 
     @Override
-    public PageResult<PageSelectMatchScoreVO> pageSelectMatchScore(PageSelectMatchScoreDTO pageSelectMatchScoreDTO) {
-        PageHelper.startPage(pageSelectMatchScoreDTO.getPage(), pageSelectMatchScoreDTO.getPageSize());
-        Page<PageSelectMatchScoreVO> page = matchScoreMapper.pageSelectMatchScore(pageSelectMatchScoreDTO);
-        long total = page.getTotal();
-        List<PageSelectMatchScoreVO> matchList = page.getResult();
-        return new PageResult<>(total, matchList);
+    public List<PageSelectMatchScoreVO> pageSelectMatchScore(PageSelectMatchScoreDTO pageSelectMatchScoreDTO) {
+        return matchScoreMapper.pageSelectMatchScore(pageSelectMatchScoreDTO);
     }
 
     @Override
