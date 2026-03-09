@@ -82,7 +82,7 @@ public class ScoreImpl implements ScoreService {
         if (matches.isEmpty()) {
             throw new Exception("该赛事无比赛记录");
         }
-        return scoreMapper.selectEventScore(matches);
+        return scoreMapper.selectEventScore(eventId);
     }
 
     @Override

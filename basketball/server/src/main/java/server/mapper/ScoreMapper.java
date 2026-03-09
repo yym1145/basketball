@@ -9,7 +9,7 @@ import java.util.List;
 
 @Mapper
 public interface ScoreMapper {
-    List<SelectEventScoreVO> selectEventScore(List<Long> matches);
+    List<SelectEventScoreVO> selectEventScore(Long eventId);
 
     List<SelectOneEventScoreVO> selectOneEventScore(SelectOneEventScoreDTO selectOneEventScoreDTO);
 }
