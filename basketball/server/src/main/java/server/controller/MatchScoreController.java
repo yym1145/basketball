@@ -60,6 +60,7 @@ public class MatchScoreController {
         return Result.success("比赛结果更新成功");
     }
 
+
     @PostMapping("/deleteMatchScore")
     @Operation(summary = "清除单场比赛结果")
     public Result<String> deleteMatchScore(@RequestBody @Validated DeleteMatchScoreDTO deleteMatchScoreDTO) throws Exception {
