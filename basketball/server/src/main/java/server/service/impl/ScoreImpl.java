@@ -6,6 +6,7 @@ import com.basketball.dto.match_score.ManualAdjustScoreDTO;
 import com.basketball.dto.score.SelectOneEventScoreDTO;
 import com.basketball.entity.BasketballMatch;
 import com.basketball.entity.MatchScore;
+import com.basketball.exception.BaseException;
 import com.basketball.vo.score.SelectEventScoreVO;
 import com.basketball.vo.score.SelectOneEventScoreVO;
 import lombok.extern.slf4j.Slf4j;
@@ -80,7 +81,7 @@ public class ScoreImpl implements ScoreService {
         List<Long> matches = matchMapper.selectByEventId(eventId);
 
         if (matches.isEmpty()) {
-            throw new Exception("该赛事无比赛记录");
+            throw new BaseException("该赛事无比赛记录");
         }
         return scoreMapper.selectEventScore(eventId);
     }
@@ -91,7 +92,7 @@ public class ScoreImpl implements ScoreService {
         List<Long> matches = matchMapper.selectByEventId(selectOneEventScoreDTO.getEventId());
 
         if (matches.isEmpty()) {
-            throw new Exception("该赛事无比赛记录");
+            throw new BaseException("该赛事无比赛记录");
         }
         return scoreMapper.selectOneEventScore(selectOneEventScoreDTO);
     }
