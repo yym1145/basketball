@@ -111,4 +111,15 @@ public class FileImpl implements FileService {
                         "attachment; filename=\"" + fileName + "\"; filename*=UTF-8''" + encodedFileName)
                 .body(resource);
     }
+
+    @Override
+    public Boolean removeFile(Long id) {
+        File file = getFile(id);
+        if (file == null){
+            throw new FileException("文件不存在");
+        }
+        fileMapper.deleteById(id);
+        minioUtil.removeFile(file.getObjectName(), file.getBucketName());
+        return true;
+    }
 }
