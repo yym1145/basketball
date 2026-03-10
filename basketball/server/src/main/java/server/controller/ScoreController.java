@@ -11,10 +11,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import server.service.ScoreService;
 
 import java.util.List;
@@ -49,6 +46,7 @@ public class ScoreController {
 
     @PostMapping("/selectEventScore")
     @Operation(summary = "获取赛事积分榜")
+    @CrossOrigin
     public Result<List<SelectEventScoreVO>> selectEventScore
             (@Parameter(description = "赛事id") Long eventId) throws Exception {
         return Result.success("查询成功",scoreService.selectEventScore(eventId));
