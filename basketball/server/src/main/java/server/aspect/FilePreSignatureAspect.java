@@ -28,10 +28,10 @@ public class FilePreSignatureAspect {
 
     @Around("@annotation(com.basketball.annotation.FilePreSignature)")
     public Object addPreSignature(ProceedingJoinPoint joinPoint) throws Throwable {
-        // 执行目标方法
+
         Object result = joinPoint.proceed();
 
-        // 递归处理对象中的 FileDataVO 字段
+        // 处理 FileDataVO 字段
         if (result != null) {
             processFileDataVO(result, Collections.newSetFromMap(new IdentityHashMap<>()));
         }
@@ -40,22 +40,24 @@ public class FilePreSignatureAspect {
     }
 
     private void processFileDataVO(Object obj, Set<Object> visited) throws Exception {
-        // 判断是否为 null、基本类型/包装类/字符串，或已访问过
-        if (obj == null || isPrimitiveOrWrapperOrString(obj.getClass()) || visited.contains(obj)) {
-            return;
-        }
+        // 空值直接返回
+        if (obj == null) return;
+
+
+        if (visited.contains(obj)) return;
         visited.add(obj);
 
-        // 判断是否为 FileDataVO
+        //  遇到 FileDataVO
         if (obj instanceof FileDataVO) {
-            FileDataVO fileData = (FileDataVO) obj;
-            if (fileData.getId() != null) {
-                fileData.setUrl(licenseUtil.generateSignedUrl(fileData.getId(), BaseContext.getCurrentUserId()));
+            FileDataVO vo = (FileDataVO) obj;
+            if (vo.getId() != null) {
+                String url = licenseUtil.generateSignedUrl(vo.getId(), BaseContext.getCurrentUserId());
+                vo.setUrl(url);
             }
             return;
         }
 
-        // List 支持
+
         if (obj instanceof List<?>) {
             for (Object item : (List<?>) obj) {
                 processFileDataVO(item, visited);
@@ -63,7 +65,16 @@ public class FilePreSignatureAspect {
             return;
         }
 
-        // Map 支持
+        // 处理数组
+        if (obj.getClass().isArray()) {
+            Object[] array = (Object[]) obj;
+            for (Object o : array) {
+                processFileDataVO(o, visited);
+            }
+            return;
+        }
+
+        // 6. 处理Map
         if (obj instanceof Map<?, ?>) {
             for (Map.Entry<?, ?> entry : ((Map<?, ?>) obj).entrySet()) {
                 processFileDataVO(entry.getValue(), visited);
@@ -71,34 +82,20 @@ public class FilePreSignatureAspect {
             return;
         }
 
-        // 关键修复：跳过 JDK 内部类，只处理自己业务包下的对象
+
         Class<?> clazz = obj.getClass();
-        if (clazz.getName().startsWith("java.") || clazz.getName().startsWith("javax.")) {
+        String className = clazz.getName();
+        if (className.startsWith("java.") || className.startsWith("javax.") || className.startsWith("sun.")) {
             return;
         }
 
-        // 是其他对象，递归处理其字段
-        Field[] fields = clazz.getDeclaredFields();
-        for (Field field : fields) {
-            // 跳过静态字段
-            if (java.lang.reflect.Modifier.isStatic(field.getModifiers())) {
-                continue;
-            }
-            // 跳过 JDK 内部类类型的字段
-            Class<?> fieldType = field.getType();
-            if (fieldType.getName().startsWith("java.") || fieldType.getName().startsWith("javax.")) {
-                continue;
-            }
-
+        // 8. 遍历所有字段
+        for (Field field : clazz.getDeclaredFields()) {
             try {
                 field.setAccessible(true);
                 Object fieldValue = field.get(obj);
-                if (fieldValue != null) {
-                    processFileDataVO(fieldValue, visited);
-                }
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            }
+                processFileDataVO(fieldValue, visited);
+            } catch (Exception ignored) {}
         }
     }
 
