@@ -121,8 +121,6 @@
             <if test="updateTeamDTO.address != null">
                 address = #{updateTeamDTO.address},
             </if>
-            <if test="logoBytes != null">
-                logo = #{logoBytes, jdbcType=BLOB},
             <if test="logo != null">
                 logo = #{logo},
             </if>
