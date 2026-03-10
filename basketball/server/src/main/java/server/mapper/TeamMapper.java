@@ -1,9 +1,11 @@
 package server.mapper;
 
+import com.basketball.dto.team.SelectTeamDetailDTO;
 import com.basketball.dto.team.SelectTeamsDTO;
 import com.basketball.dto.team.UpdateTeamDTO;
 import com.basketball.entity.Team;
 import com.basketball.vo.player.PlayerVO;
+import com.basketball.vo.player.SelectPlayerVO;
 import com.basketball.vo.team.SelectTeamDetailVO;
 import com.basketball.vo.team.SelectTeamsVO;
 import com.github.pagehelper.Page;
@@ -27,7 +29,7 @@ public interface TeamMapper {
     /**
      * 查询球队球员列表
      */
-    List<PlayerVO> selectPlayersByTeamId( Long teamId, String playerName);
+    List<PlayerVO> selectPlayersByTeamId(Long teamId, String playerName);
 
     /**
      * 根据名称查询球队（校验重复）
@@ -48,7 +50,7 @@ public interface TeamMapper {
     /**
      *修改球队
      */
-    int updateTeam(UpdateTeamDTO updateTeamDTO);
+    int updateTeam(UpdateTeamDTO updateTeamDTO,Long logo);
     /**
      * 删除球队
      */

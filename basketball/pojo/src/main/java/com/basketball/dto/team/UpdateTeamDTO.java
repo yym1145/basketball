@@ -23,5 +23,5 @@ public class UpdateTeamDTO {
     @Schema(description = "球队Logo")
     private MultipartFile logo;
 
-    private byte[] logoBytes;
+
 }

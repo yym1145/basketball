@@ -4,43 +4,94 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- namespace等于mapper接口类的全限定名,这样实现对应 -->
 <mapper namespace="server.mapper.TeamMapper">
-    <select id="selectteams" resultType="com.basketball.vo.team.SelectTeamsVO">
-        select id,
-        name,
-        contact_phone,
-        address,
-
-        established_date
-        from team
+    <resultMap id="selectTeamsVOMap" type="com.basketball.vo.team.SelectTeamsVO">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="contact_phone" property="contactPhone"/>
+        <result column="address" property="address"/>
+        <result column="established_date" property="establishedDate"/>
+        <association property="logo" javaType="com.basketball.vo.file.FileDataVO">
+            <id column="file_id" property="id"/>
+            <result column="file_name" property="name"/>
+        </association>
+    </resultMap>
+    <select id="selectteams" resultMap="selectTeamsVOMap">
+        SELECT
+        t.id,
+        t.name,
+        t.contact_phone,
+        t.address,
+        t.established_date,
+        f.id AS file_id,
+        f.file_name
+        FROM team t
+        LEFT JOIN file f ON t.logo = f.id
         <where>
-            <if test="name!= null">
-                team.name LIKE CONCAT('%',#{name},'%')
+            <if test="name != null and name != ''">
+                AND t.name LIKE CONCAT('%', #{name}, '%')
             </if>
         </where>
     </select>
 
-    <select id="selectTeamById" resultType="com.basketball.vo.team.SelectTeamDetailVO">
-        SELECT
-        id,
-        name,
+    <!-- 定义简单的球队结果映射 (处理 Logo 嵌套) -->
+    <resultMap id="teamWithLogoMap" type="com.basketball.vo.team.SelectTeamDetailVO">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="establishedDate" column="established_date"/>
+        <result property="contactPhone" column="contact_phone"/>
+        <result property="address" column="address"/>
+        <association property="logo" javaType="com.basketball.vo.file.FileDataVO">
+            <id property="id" column="file_id"/>
+            <result property="name" column="file_name"/>
+        </association>
+    </resultMap>
 
-        established_date AS establishedDate,
-        contact_phone AS contactPhone,
-        address
-        FROM team
-        WHERE id = #{teamId}
+    <select id="selectTeamById" resultMap="teamWithLogoMap">
+        SELECT
+        t.id,
+        t.name,
+        t.established_date,
+        t.contact_phone,
+        t.address,
+        f.id AS file_id,
+        f.file_name
+        FROM team t
+        LEFT JOIN file f ON t.logo = f.id
+        WHERE t.id = #{teamId}
     </select>
-    <select id="selectPlayersByTeamId" resultType="com.basketball.vo.player.PlayerVO">
+    <resultMap id="playerVOMap" type="com.basketball.vo.player.PlayerVO">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="date_of_birth" property="dateOfBirth"/>
+        <result column="weight" property="weight"/>
+        <result column="height" property="height"/>
+        <result column="shirt_number" property="shirtNumber"/>
+        <result column="team_id" property="teamId"/>
+        <result column="position_name" property="position"/>
+        <association property="photo" javaType="com.basketball.vo.file.FileDataVO">
+            <id column="file_id" property="id"/>
+            <result column="file_name" property="name"/>
+            <!-- <result column="file_url" property="url"/> -->
+        </association>
+    </resultMap>
+
+    <select id="selectPlayersByTeamId" resultMap="playerVOMap">
         SELECT
         p.id,
-        p.photo,
         CONCAT(p.last_name, p.first_name) AS name,
-        p.date_of_birth AS dateOfBirth,
-        pos.name AS position,
-        p.shirt_number AS shirtNumber
+        p.date_of_birth,
+        p.weight,
+        p.height,
+        p.shirt_number,
+        p.team_id,
+        f.id AS file_id,
+        f.file_name,
+        pos.name AS position_name
         FROM player p
+        LEFT JOIN file f ON p.photo = f.id
         LEFT JOIN position pos ON p.position_id = pos.id
         WHERE p.team_id = #{teamId}
+
         <if test="playerName != null and playerName != ''">
             AND CONCAT(p.last_name, p.first_name) LIKE CONCAT('%', #{playerName}, '%')
         </if>
@@ -61,19 +112,21 @@
     <update id="updateTeam">
         UPDATE team
         <set>
-            <if test="name != null">
-                name = #{name},
+            <if test="updateTeamDTO.name != null">
+                name = #{updateTeamDTO.name},
             </if>
-            <if test="contactPhone != null">
-                contact_phone = #{contactPhone},
+            <if test="updateTeamDTO.contactPhone != null">
+                contact_phone = #{updateTeamDTO.contactPhone},
             </if>
-            <if test="address != null">
-                address = #{address},
+            <if test="updateTeamDTO.address != null">
+                address = #{updateTeamDTO.address},
             </if>
             <if test="logoBytes != null">
                 logo = #{logoBytes, jdbcType=BLOB},
+            <if test="logo != null">
+                logo = #{logo},
             </if>
         </set>
-        WHERE id = #{id}
+        WHERE id = #{updateTeamDTO.id}
     </update>
 </mapper>

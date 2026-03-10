@@ -1,5 +1,6 @@
 package com.basketball.vo.team;
 
+import com.basketball.vo.file.FileDataVO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -16,7 +17,7 @@ public class SelectTeamsVO {
     @Schema(description = "球队地址")
     private String address;
     @Schema(description = "球队Logo")
-    private String logo;
+    private FileDataVO logo;
     @Schema(description = "成立日期")
     private Date establishedDate;
 }
