@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="server.mapper.VideoMapper">
+    <resultMap id="video" type="com.basketball.vo.video.SelectAllVideoVO">
+        <id column="id" property="id"/>
+        <result column="introduce" property="introduce"/>
+        <association property="video" javaType="com.basketball.vo.file.FileDataVO">
+            <id column="file_id" property="id"/>
+            <result column="file_name" property="name"/>
+        </association>
+    </resultMap>
+
+    <select id="selectAllVideo" resultMap="video">
+        select v.id, v.introduce, f.id as file_id,f.file_name
+        from video v
+        left join file f on v.video_file_id = f.id
+        <where>
+            <if test="introduce != null">
+                v.introduce like concat('%', #{introduce}, '%')
+            </if>
+        </where>
+    </select>
+
+    <resultMap id="getVideo" type="com.basketball.vo.video.GetVideoDetailsVO">
+        <id column="id" property="id"/>
+        <result column="view_count" property="viewCount"/>
+        <result column="particulars" property="particulars"/>
+        <result column="publisher" property="publisher"/>
+        <result column="publish_date" property="publishDate"/>
+        <association property="video" javaType="com.basketball.vo.file.FileDataVO">
+            <id column="file_id" property="id"/>
+            <result column="file_name" property="name"/>
+        </association>
+    </resultMap>
+
+    <select id="getVideoDetails" resultMap="getVideo">
+        select v.id, v.view_count, v.particulars, v.publisher, v.publish_date, f.id as file_id,f.file_name
+        from video v
+        left join file f on v.video_file_id = f.id
+        where v.id = #{id}
+    </select>
+</mapper>
