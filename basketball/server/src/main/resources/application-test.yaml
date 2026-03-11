@@ -10,9 +10,9 @@ spring:
       max-file-size: 100MB
       max-request-size: 300MB
   redis:
-    host: redis-19434.c270.us-east-1-3.ec2.cloud.redislabs.com
-    port: 19434
-    password: "wlcdzUsh7mTE07UDjOMddeOYnGeWkfHV"
+    host: redis-17549.crce264.ap-east-1-1.ec2.cloud.redislabs.com
+    port: 17549
+    password: "UcURJsYNLJXFPohkzt3YEIDzueGYvg22"
     database: 0
 
 
