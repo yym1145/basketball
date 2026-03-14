@@ -7,8 +7,13 @@ import lombok.Data;
 public class SelectEventScoreVO {
     @Schema(description = "排名")
     private Long rank;
+
+    @Schema(description = "球队id")
+    private Long id;
+
     @Schema(description = "球队积分")
     private Long score;
+
     @Schema(description = "球队名称")
     private String name;
 }

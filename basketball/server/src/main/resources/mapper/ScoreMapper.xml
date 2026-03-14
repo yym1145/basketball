@@ -10,10 +10,12 @@
                 ORDER BY score DESC
             ) AS `rank`,
             name,
-            score
+            score,
+            id
             FROM (
                  SELECT
                      t.`name` AS name,
+                     t.id,
                      SUM(
                         CASE
                             WHEN (t.id = m.teama AND ms.teama_score > ms.teamb_score) OR
