@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="server.mapper.MatchPhotoMapper">
+    <resultMap id="matchphoto" type="com.basketball.vo.photo.SelectAllMatchPhotoVO">
+        <id column="id" property="id"/>
+        <association property="file" javaType="com.basketball.vo.file.FileDataVO">
+            <id column="file_id" property="id"/>
+            <result column="file_name" property="name"/>
+        </association>
+    </resultMap>
+    <select id="selectAllMatchPhoto" resultMap="matchphoto">
+        SELECT
+        mp.id,
+        mp.file_id,
+        f.file_name
+        FROM matchphoto mp
+        INNER JOIN `match` m ON mp.match_id = m.id
+        INNER JOIN event e ON m.event_id = e.id
+        INNER JOIN file f ON mp.file_id = f.id
+        WHERE 1 = 1
+        <if test="id == null">
+            AND e.status_id = 2
+        </if>
+        <if test="id != null">
+            AND e.id = #{id}
+        </if>
+        ORDER BY mp.id DESC
+    </select>
+
+    <resultMap id="photo" type="com.basketball.vo.photo.SelectMatchPhotoVO">
+        <id column="description" property="description"/>
+        <association property="file" javaType="com.basketball.vo.file.FileDataVO">
+            <id column="id" property="id"/>
+            <result column="file_name" property="name"/>
+        </association>
+    </resultMap>
+
+    <select id="selectMatchPhoto" resultMap="photo">
+        SELECT
+        mp.description,
+        f.id,
+        f.file_name
+        FROM matchphoto mp
+        INNER JOIN file f on mp.file_id = f.id
+        where mp.file_id = #{id}
+    </select>
+</mapper>
