@@ -35,7 +35,7 @@ public class PhotoController {
     @Operation(summary = "上传比赛照片")
     @ApiOperationSupport(author = "丁泽锋")
     public Result uploadPhoto(@Valid @Parameter(description = "照片信息",required = true) @RequestPart("dto") UploadPhotoDTO uploadPhotoDTO,
-                              @Parameter(description = "照片文件") @RequestPart(value = "video",required = false) MultipartFile photoFile){
+                              @Parameter(description = "照片文件") @RequestPart(value = "photo",required = false) MultipartFile photoFile){
         String photoId = photoService.uploadPhoto(uploadPhotoDTO,photoFile);
         return Result.success("上传成功，id为：",photoId);
     }
